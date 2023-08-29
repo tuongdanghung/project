@@ -1,0 +1,22 @@
+import axios from "../config/axios";
+const token = localStorage.getItem("auth");
+export const apiCreateBrand = (data: any) =>
+    axios({
+        url: "/brand/create",
+        method: "POST",
+        data: data,
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
+export const apiGetAllBrand = (token: string) =>
+    axios({
+        url: "/brand",
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+    });
+export const apiDeleteBrand = (data: any) =>
+    axios({
+        url: `/brand/${data.id}`,
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${data.token}` },
+    });

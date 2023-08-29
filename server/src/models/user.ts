@@ -29,7 +29,10 @@ const userSchema = new mongoose.Schema<User>(
             type: String,
             required: true,
         },
-        wallet: 0,
+        wallet: {
+            type: Number,
+            default: 0,
+        },
         role: {
             type: String,
             enum: ["1", "2"],

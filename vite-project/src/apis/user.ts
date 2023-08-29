@@ -23,3 +23,17 @@ export const apiLogin = (data: object) =>
         withCredentials: true,
         data: data,
     });
+
+export const apiFinalRegister = (params: string) =>
+    axios({
+        url: `/user/finalRegister/${params}`,
+        method: "PUT",
+    });
+
+export const apiUpdateUserByAdmin = (data: any) =>
+    axios({
+        url: `/user/updateAdmin/${data.id}`,
+        method: "PUT",
+        data: data,
+        headers: { Authorization: `Bearer ${data.token}` },
+    });

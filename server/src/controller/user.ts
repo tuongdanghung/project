@@ -114,8 +114,6 @@ const login = asyncHandler(async (req: Request, res: Response) => {
 });
 // login
 
-// me
-
 const me = asyncHandler(async (req: any, res: Response) => {
     const { _id } = req.user;
     const user = await UserModel.findById({ _id })

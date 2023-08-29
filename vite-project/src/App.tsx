@@ -8,7 +8,7 @@ import {
     Product,
     ProductDetail,
     Profile,
-} from "./customer-site/pages";
+} from "./layout/customer-site/pages";
 import {
     ExtendAdmin,
     Dashboard,
@@ -16,12 +16,12 @@ import {
     ManagerProduct,
     ManagerOrder,
     ManagerBrand,
-} from "./admin-site/pages";
-import path from "./customer-site/utils/path";
-import pathAdmin from "./admin-site/utils/path";
+    Context,
+    ManagerComment,
+} from "./layout/admin-site/pages";
+import path from "./layout/customer-site/utils/path";
+import pathAdmin from "./layout/admin-site/utils/path";
 import "react-toastify/dist/ReactToastify.css";
-
-import ManagerComment from "./admin-site/pages/managerComment";
 // import Notifications from "react-push-notification";
 // function App() {
 //   const handleClick = () => {
@@ -101,6 +101,10 @@ function App() {
                         <Route
                             path={pathAdmin.MANAGER_COMMENT}
                             element={<ManagerComment />}
+                        ></Route>
+                        <Route
+                            path={pathAdmin.MANAGER_EXAMPLE}
+                            element={<Context />}
                         ></Route>
                     </Route>
                     <Route path={path.LOGIN} element={<Login />}></Route>

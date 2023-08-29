@@ -12,7 +12,7 @@ router.get("/", [verifyToken, isAdmin], controllers.getAllUser);
 router.put("/address", [verifyToken], controllers.addressUser);
 router.put("/update", [verifyToken], controllers.updateUser);
 router.put(
-    "/updateadmin/:uid",
+    "/updateAdmin/:uid",
     [verifyToken, isAdmin],
     controllers.updateUserByAdmin
 );

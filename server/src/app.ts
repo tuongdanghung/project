@@ -13,7 +13,7 @@ app.use(
         credentials: true,
     })
 );
-const PORT = 8888;
+const PORT = process.env.PORT || 8888;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
