@@ -22,7 +22,7 @@ import { apiDeleteProduct, apiEditProduct } from "../../../../apis";
 import { AppDispatch } from "../../../../store";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import Modal from "../../components/modal";
+import ModalEditProduct from "../../components/modal/ModalEditProduct";
 import Snipper from "../../components/snipper";
 
 const TABLE_HEAD = [
@@ -185,7 +185,7 @@ const ManagerProduct = () => {
             <CardFooter className="flex items-center border-t border-blue-gray-50 p-4 justify-center">
                 <Pagination />
             </CardFooter>
-            <Modal
+            <ModalEditProduct
                 open={open}
                 item={item}
                 brand={brand}

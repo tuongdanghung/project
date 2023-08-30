@@ -20,3 +20,11 @@ export const apiDeleteBrand = (data: any) =>
         method: "DELETE",
         headers: { Authorization: `Bearer ${data.token}` },
     });
+
+export const apiUpdateBrand = (data: any) =>
+    axios({
+        url: `/brand/${data.id}`,
+        data: data,
+        method: "PUT",
+        headers: { Authorization: `Bearer ${data.token}` },
+    });

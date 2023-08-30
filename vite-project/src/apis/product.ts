@@ -37,7 +37,14 @@ export const apiEditProduct = (data: any, id: any) =>
         headers: { Authorization: `Bearer ${token}` },
     });
 
-//
+// product
+export const apiCreateRam = (data: any) =>
+    axios({
+        url: "/ram/create",
+        method: "POST",
+        data: data,
+        headers: { Authorization: `Bearer ${token}` },
+    });
 
 export const apiGetAllRam = (token: any) =>
     axios({
@@ -45,18 +52,77 @@ export const apiGetAllRam = (token: any) =>
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
     });
-//
+
+export const apiEditRam = (data: any) =>
+    axios({
+        url: `/ram/${data.id}`,
+        data: data,
+        method: "PUT",
+        headers: { Authorization: `Bearer ${data.token}` },
+    });
+
+export const apiDeleteRam = (data: any) =>
+    axios({
+        url: `/ram/${data.id}`,
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${data.token}` },
+    });
+// ram
+export const apiCreateCapacity = (data: any) =>
+    axios({
+        url: "/capacity/create",
+        method: "POST",
+        data: data,
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
 export const apiGetAllCapacity = (token: any) =>
     axios({
         url: "/capacity",
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
     });
-//
+export const apiEditCapacity = (data: any) =>
+    axios({
+        url: `/capacity/${data.id}`,
+        data: data,
+        method: "PUT",
+        headers: { Authorization: `Bearer ${data.token}` },
+    });
+export const apiDeleteCapacity = (data: any) =>
+    axios({
+        url: `/capacity/${data.id}`,
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${data.token}` },
+    });
+// capacity
+export const apiCreateColor = (data: any) =>
+    axios({
+        url: "/color/create",
+        method: "POST",
+        data: data,
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
 export const apiGetAllColor = (token: any) =>
     axios({
         url: "/color",
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
     });
-//
+
+export const apiDeleteColor = (data: any) =>
+    axios({
+        url: `/color/${data.id}`,
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${data.token}` },
+    });
+
+export const apiEditColor = (data: any) =>
+    axios({
+        url: `/color/${data.id}`,
+        data: data,
+        method: "PUT",
+        headers: { Authorization: `Bearer ${data.token}` },
+    });
+// color

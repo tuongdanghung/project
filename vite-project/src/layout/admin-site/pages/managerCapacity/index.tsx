@@ -9,31 +9,34 @@ import {
 } from "@material-tailwind/react";
 import Pagination from "../../components/pagination";
 import Head from "../../components/layout/Head";
-import { GetBrand } from "../../../../store/actions";
+import { GetCapacity } from "../../../../store/actions";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../../store";
-import { apiDeleteBrand } from "../../../../apis";
+import { apiDeleteCapacity } from "../../../../apis";
 import DialogComponent from "../../components/modal/modalUpdate";
 import { ToastContainer, toast } from "react-toastify";
 const TABLE_HEAD = ["Title", ""];
-const ManagerBrand = () => {
+
+const ManagerCapacity: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
     const token = localStorage.getItem("auth");
-    const brand = useSelector((state: any) => state?.productReducer.brand);
+    const capacity = useSelector(
+        (state: any) => state?.productReducer.capacity
+    );
     const [id, setId] = useState<string>("");
     useEffect(() => {
-        dispatch(GetBrand(token));
+        dispatch(GetCapacity(token));
     }, []);
     const handleDelete = async (id: string) => {
         const payload = { id, token: token };
-        const response = await apiDeleteBrand(payload);
+        const response = await apiDeleteCapacity(payload);
         if (response.data.success) {
-            dispatch(GetBrand(token));
-            toast.success("Delete brand successfully");
+            dispatch(GetCapacity(token));
+            toast.success("Delete ram successfully");
         } else {
-            toast.error("Delete brand failed");
+            toast.error("Delete ram failed");
         }
     };
     const handleOpen = (id: string) => {
@@ -46,7 +49,7 @@ const ManagerBrand = () => {
     return (
         <Card className="h-full w-full">
             <CardHeader floated={false} shadow={false} className="rounded-none">
-                <Head title={"Manager Brand"} slug={"manager-brand"} />
+                <Head title={"Capacity"} slug={"manager-capacity"} />
             </CardHeader>
             <CardBody className="px-0">
                 <table className="w-full min-w-max table-auto text-center">
@@ -69,12 +72,11 @@ const ManagerBrand = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {brand?.map((item: any, index: any) => {
+                        {capacity?.map((item: any, index: any) => {
                             const isLast = index === item.length - 1;
                             const classes = isLast
                                 ? "p-4"
                                 : "p-4 border-b border-blue-gray-50";
-
                             return (
                                 <tr key={item._id}>
                                     <td className={classes}>
@@ -84,7 +86,7 @@ const ManagerBrand = () => {
                                                 color="blue-gray"
                                                 className="font-bold"
                                             >
-                                                {item.title}
+                                                {item.size}
                                             </Typography>
                                         </div>
                                     </td>
@@ -121,14 +123,13 @@ const ManagerBrand = () => {
             <DialogComponent
                 id={id}
                 open={open}
-                slug={"manager-brand"}
-                title={"Edit brand"}
+                slug={"manager-capacity"}
+                title={"Edit Capacity"}
                 handleClose={handleClose}
-                // handleOpen={handleOpen}
             />
             <ToastContainer />
         </Card>
     );
 };
 
-export default ManagerBrand;
+export default ManagerCapacity;

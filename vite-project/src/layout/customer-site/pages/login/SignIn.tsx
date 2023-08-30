@@ -37,8 +37,11 @@ const Signin = () => {
         }
         if (payload.email !== "" && payload.password !== "") {
             const response = await apiLogin(payload);
-            if ((response as any).success) {
-                localStorage.setItem("auth", (response as any).accessToken);
+            if ((response as any).data.success) {
+                localStorage.setItem(
+                    "auth",
+                    (response as any).data.accessToken
+                );
                 navigate(
                     `${
                         Number(response.data.secondary_role) !== 1

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Required from "../required";
 
 type Props = {
     handleBrand: (title: string) => void;
@@ -19,12 +18,6 @@ const Brand: React.FC<Props> = (props: any) => {
                 type="text"
                 value={title}
                 onChange={(e) => handleChange(e.target.value)}
-            />
-            <Required
-                value={title}
-                // valid={checkValid.title}
-                keywords="Title"
-                // setShow={setCheckValid}
             />
         </div>
     );

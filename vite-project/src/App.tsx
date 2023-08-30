@@ -18,6 +18,10 @@ import {
     ManagerBrand,
     Context,
     ManagerComment,
+    ManagerCategory,
+    ManagerRam,
+    ManagerColor,
+    ManagerCapacity,
 } from "./layout/admin-site/pages";
 import path from "./layout/customer-site/utils/path";
 import pathAdmin from "./layout/admin-site/utils/path";
@@ -97,6 +101,22 @@ function App() {
                         <Route
                             path={pathAdmin.MANAGER_BRAND}
                             element={<ManagerBrand />}
+                        ></Route>
+                        <Route
+                            path={pathAdmin.MANAGER_CATEGORY}
+                            element={<ManagerCategory />}
+                        ></Route>
+                        <Route
+                            path={pathAdmin.MANAGER_COLOR}
+                            element={<ManagerColor />}
+                        ></Route>
+                        <Route
+                            path={pathAdmin.MANAGER_RAM}
+                            element={<ManagerRam />}
+                        ></Route>
+                        <Route
+                            path={pathAdmin.MANAGER_CAPACITY}
+                            element={<ManagerCapacity />}
                         ></Route>
                         <Route
                             path={pathAdmin.MANAGER_COMMENT}

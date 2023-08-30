@@ -50,7 +50,7 @@ const ManagerUsers = () => {
         <Card className="h-full w-full">
             <CardHeader floated={false} shadow={false} className="rounded-none">
                 <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
-                    <Head title={"Manager User"} />
+                    <Head title={"Manager User"} slug={"manager-user"} />
                     <div className="flex w-full shrink-0 gap-2 md:w-max">
                         <Search />
                         <Download />

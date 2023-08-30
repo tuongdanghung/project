@@ -2,6 +2,10 @@ import pathAdmin from "./path";
 import { GrProductHunt } from "react-icons/gr";
 import { TbBrandAppleArcade } from "react-icons/tb";
 import { PiUsersFourDuotone } from "react-icons/pi";
+import { BiCategoryAlt } from "react-icons/bi";
+import { BsFillDiagram3Fill } from "react-icons/bs";
+import { IoIosColorPalette } from "react-icons/io";
+import { MdReduceCapacity } from "react-icons/md";
 import {
     AiOutlineDashboard,
     AiOutlineShoppingCart,
@@ -52,6 +56,26 @@ export const adminNavigation: MenuItem[] = [
                 value: "Manage Brand",
                 icon: <TbBrandAppleArcade />,
                 path: `${pathAdmin.MANAGER_BRAND}`,
+            },
+            {
+                value: "Manage Category",
+                icon: <BiCategoryAlt />,
+                path: `${pathAdmin.MANAGER_CATEGORY}`,
+            },
+            {
+                value: "Color",
+                icon: <IoIosColorPalette />,
+                path: `${pathAdmin.MANAGER_COLOR}`,
+            },
+            {
+                value: "RAM",
+                icon: <BsFillDiagram3Fill />,
+                path: `${pathAdmin.MANAGER_RAM}`,
+            },
+            {
+                value: "Capacity",
+                icon: <MdReduceCapacity />,
+                path: `${pathAdmin.MANAGER_CAPACITY}`,
             },
         ],
     },

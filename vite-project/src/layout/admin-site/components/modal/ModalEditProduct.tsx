@@ -12,7 +12,7 @@ import Required from "../required";
 import CheckBoxComponent from "../checkbox";
 import "./index.scss";
 import CheckBoxImage from "../checkBoxImage";
-const ModalComponent: React.FC<Modal> = (props) => {
+const ModalEditProduct: React.FC<Modal> = (props) => {
     const [open, setOpen] = useState<boolean>(false);
     const [item, setItem] = useState<any>(props.item);
     const [itemInput, setItemInput] = useState<any>({});
@@ -221,4 +221,4 @@ const ModalComponent: React.FC<Modal> = (props) => {
     );
 };
 
-export default ModalComponent;
+export default ModalEditProduct;

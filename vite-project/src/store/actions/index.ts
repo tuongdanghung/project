@@ -6,10 +6,10 @@ export const GetAllUsersByAdmin = createAsyncThunk<any, any, type.UserType>(
     "users",
     async (token: string, { rejectWithValue }) => {
         const response = await apis.apiGetAllUer(token);
-        if (!(response as any).success) {
+        if (!(response as any).data.success) {
             return rejectWithValue("Error fetching data");
         }
-        return response.data;
+        return response.data.data;
     }
 );
 

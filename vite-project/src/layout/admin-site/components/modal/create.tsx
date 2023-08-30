@@ -19,12 +19,22 @@ import {
 import { getBase64 } from "../../utils/helper";
 import Required from "../required";
 import "./index.scss";
-import { apiCreateBrand, apiCreateProduct } from "../../../../apis";
+import {
+    apiCreateBrand,
+    apiCreateProduct,
+    apiCreateCategory,
+    apiCreateColor,
+    apiCreateRam,
+    apiCreateCapacity,
+} from "../../../../apis";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../../store";
 import { ToastContainer, toast } from "react-toastify";
 import Snipper from "../snipper";
-import Brand from "./brand";
+import Brand from "./chillModalCreate/Brand";
+import Category from "./chillModalCreate/Category";
+import Color from "./chillModalCreate/Color";
+import Capacity from "./chillModalCreate/Capacity";
 const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
     const [open, setOpen] = useState<boolean>(false);
     const [isSnipper, setIsSnipper] = useState(false);
@@ -46,14 +56,7 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
     const [description, setDescription] = useState<string>("");
     const [itemValueBrand, setItemValueBrand] = useState<any>("");
     const [itemValueCategory, setItemValueCategory] = useState<any>("");
-    const capacity = useSelector(
-        (state: any) => state?.productReducer.capacity
-    );
-    const category = useSelector(
-        (state: any) => state?.productReducer.category
-    );
-    //
-    const [valueAddNewBrand, setValueAddNewBrand] = useState<string>("");
+    const [value, setValue] = useState<string>("");
     const [checkValid, setCheckValid] = useState<CheckValidInterface>({
         title: false,
         price: false,
@@ -65,8 +68,14 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
         color: false,
         description: false,
         quantity: false,
-        valueAddNewBrand: false,
     });
+    const capacity = useSelector(
+        (state: any) => state?.productReducer.capacity
+    );
+    const category = useSelector(
+        (state: any) => state?.productReducer.category
+    );
+
     const toBase64 = async (watch: any) => {
         const newFileArray = [];
         if (watch !== "listen") {
@@ -103,7 +112,6 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
         const sizeIndex = updatedCheckBoxSizes.findIndex(
             (selectItem) => selectItem.title === size
         );
-        console.log(updatedCheckBoxSizes);
         if (sizeIndex !== -1) {
             updatedCheckBoxSizes.splice(sizeIndex, 1); // Loại bỏ nếu đã tồn tại
         } else {
@@ -206,8 +214,8 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                 category: itemValueCategory,
                 quantity,
                 ram: JSON.stringify(itemValueRam),
-                capacity: JSON.stringify(capacity),
-                color: JSON.stringify(itemValueCapacity),
+                capacity: JSON.stringify(itemValueCapacity),
+                color: JSON.stringify(itemValueColor),
             };
             const formData = new FormData();
             for (let i of Object.entries(payload)) formData.append(i[0], i[1]);
@@ -237,30 +245,113 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
             }
         }
         if (slug === "manager-brand") {
-            if (valueAddNewBrand === "") {
+            if (value === "") {
                 setCheckValid((prevState) => ({
                     ...prevState,
-                    valueAddNewBrand: true,
+                    brand: true,
                 }));
             }
-            if (valueAddNewBrand !== "") {
-                console.log(valueAddNewBrand);
+            if (value !== "") {
                 const response = await apiCreateBrand({
-                    title: valueAddNewBrand,
+                    title: value,
                 });
                 if (response.data.success) {
                     setIsSnipper(false);
                     dispatch(GetBrand(token));
-                    props.handleClose(false);
                     toast.success("Create brand successfully");
                 } else {
                     toast.error("Create brand failed");
                 }
+                props.handleClose(false);
+            }
+        }
+        if (slug === "manager-category") {
+            if (value === "") {
+                setCheckValid((prevState) => ({
+                    ...prevState,
+                    category: true,
+                }));
+            }
+            if (value !== "") {
+                const response = await apiCreateCategory({
+                    title: value,
+                });
+                if (response.data.success) {
+                    setIsSnipper(false);
+                    dispatch(GetCategory(token));
+                    toast.success("Create category successfully");
+                } else {
+                    toast.error("Create category failed");
+                }
+                props.handleClose(false);
+            }
+        }
+        if (slug === "manager-color") {
+            if (value === "") {
+                setCheckValid((prevState) => ({
+                    ...prevState,
+                    color: true,
+                }));
+            }
+            if (value !== "") {
+                const response = await apiCreateColor({
+                    color: value,
+                });
+                if (response.data.success) {
+                    setIsSnipper(false);
+                    dispatch(GetColor(token));
+                    toast.success("Create color successfully");
+                } else {
+                    toast.error("Create color failed");
+                }
+                props.handleClose(false);
+            }
+        }
+        if (slug === "manager-ram") {
+            if (value === "") {
+                setCheckValid((prevState) => ({
+                    ...prevState,
+                    ram: true,
+                }));
+            }
+            if (value !== "") {
+                const response = await apiCreateRam({
+                    size: Number(value),
+                });
+                if (response.data.success) {
+                    setIsSnipper(false);
+                    dispatch(GetRam(token));
+                    toast.success("Create ram successfully");
+                } else {
+                    toast.error("Create ram failed");
+                }
+                props.handleClose(false);
+            }
+        }
+        if (slug === "manager-capacity") {
+            if (value === "") {
+                setCheckValid((prevState) => ({
+                    ...prevState,
+                    capacity: true,
+                }));
+            }
+            if (value !== "") {
+                const response = await apiCreateCapacity({
+                    size: Number(value),
+                });
+                if (response.data.success) {
+                    setIsSnipper(false);
+                    dispatch(GetCapacity(token));
+                    toast.success("Create ram successfully");
+                } else {
+                    toast.error("Create ram failed");
+                }
+                props.handleClose(false);
             }
         }
     };
-    const handleBrand = (title: any) => {
-        setValueAddNewBrand(title);
+    const handleData = (title: string) => {
+        setValue(title);
     };
     return (
         <Dialog
@@ -513,9 +604,8 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                             {file && Array.isArray(file) && file.length > 0 && (
                                 <div className="grid grid-cols-5 gap-5 mt-4">
                                     {file.map((item: any, index: number) => (
-                                        <div>
+                                        <div key={index}>
                                             <img
-                                                key={index}
                                                 width={100}
                                                 src={item.image}
                                                 alt=""
@@ -529,10 +619,54 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                 )}
                 {slug === "manager-brand" && (
                     <div>
-                        <Brand handleBrand={handleBrand} />
+                        <Brand handleBrand={handleData} />
                         <Required
-                            value={valueAddNewBrand}
-                            valid={checkValid.valueAddNewBrand}
+                            value={brand}
+                            valid={checkValid.brand}
+                            keywords="Title"
+                            setShow={setCheckValid}
+                        />
+                    </div>
+                )}
+                {slug === "manager-category" && (
+                    <div>
+                        <Category handleData={handleData} />
+                        <Required
+                            value={category}
+                            valid={checkValid.category}
+                            keywords="Title"
+                            setShow={setCheckValid}
+                        />
+                    </div>
+                )}
+                {slug === "manager-color" && (
+                    <div>
+                        <Color handleData={handleData} />
+                        <Required
+                            value={category}
+                            valid={checkValid.category}
+                            keywords="Title"
+                            setShow={setCheckValid}
+                        />
+                    </div>
+                )}
+                {slug === "manager-ram" && (
+                    <div>
+                        <Color handleData={handleData} />
+                        <Required
+                            value={ram}
+                            valid={checkValid.ram}
+                            keywords="Title"
+                            setShow={setCheckValid}
+                        />
+                    </div>
+                )}
+                {slug === "manager-capacity" && (
+                    <div>
+                        <Capacity handleData={handleData} />
+                        <Required
+                            value={capacity}
+                            valid={checkValid.capacity}
                             keywords="Title"
                             setShow={setCheckValid}
                         />
