@@ -6,6 +6,12 @@ export const apiGetAllUer = (token: any) =>
         headers: { Authorization: `Bearer ${token}` },
     });
 
+export const apiGetOneUser = (token: any) =>
+    axios({
+        url: "/user/me",
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+    });
 export const apiRegister = (data: object) =>
     axios({
         url: "/user/register",

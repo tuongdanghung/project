@@ -5,6 +5,7 @@ export const appSlice = createSlice({
     name: "users",
     initialState: {
         users: null,
+        oneUser: null,
         isLoading: false,
     },
     reducers: {},
@@ -20,6 +21,11 @@ export const appSlice = createSlice({
                 state.users = action.payload;
             }
         );
+
+        builder.addCase(actions.GetOneUser.fulfilled, (state: any, action) => {
+            state.isLoading = false;
+            state.oneUser = action.payload;
+        });
 
         builder.addCase(actions.GetAllUsersByAdmin.rejected, (state: any) => {
             state.isLoading = false;

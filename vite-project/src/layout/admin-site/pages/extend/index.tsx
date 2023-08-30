@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { Nav } from "../../components";
-const ExtendAdmin = () => {
+import { AppDispatch } from "../../../../store";
+import { GetOneUser } from "../../../../store/actions";
+import { useDispatch, useSelector } from "react-redux";
+const ExtendAdmin: React.FC = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const token = localStorage.getItem("auth");
+    const user = useSelector((state: any) => state?.userReducer?.oneUser);
+    useEffect(() => {
+        dispatch(GetOneUser(token));
+    }, []);
     return (
-        <div className="flex w-full">
-            <div className="w-1/6">
-                <Nav />
-            </div>
-            <div className="w-5/6">
-                <Outlet />
-            </div>
-        </div>
+        <>
+            {+user?.role === 1 ? (
+                <div className="flex w-full">
+                    <div className="w-1/6">
+                        <Nav />
+                    </div>
+                    <div className="w-5/6">
+                        <Outlet />
+                    </div>
+                </div>
+            ) : null}
+        </>
     );
 };
 

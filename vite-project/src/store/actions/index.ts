@@ -13,6 +13,17 @@ export const GetAllUsersByAdmin = createAsyncThunk<any, any, type.UserType>(
     }
 );
 
+export const GetOneUser = createAsyncThunk<any, any, type.UserType>(
+    "OneUser",
+    async (token: string, { rejectWithValue }) => {
+        const response = await apis.apiGetOneUser(token);
+        if (!(response as any).data.success) {
+            return rejectWithValue("Error fetching data");
+        }
+        return response.data.message;
+    }
+);
+
 export const GetAllProduct = createAsyncThunk<any, any, type.ProductType>(
     "product",
     async (token: string, { rejectWithValue }) => {
