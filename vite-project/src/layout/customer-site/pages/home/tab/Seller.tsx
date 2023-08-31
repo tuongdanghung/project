@@ -19,9 +19,6 @@ const Seller = (props: any) => {
             <Swiper
                 slidesPerView={1}
                 spaceBetween={10}
-                pagination={{
-                    clickable: true,
-                }}
                 autoplay={{
                     delay: 2500,
                     disableOnInteraction: false,
