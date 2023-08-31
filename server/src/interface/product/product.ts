@@ -6,6 +6,7 @@ export interface Brand {
 }
 export interface Capacity {
     size: number;
+    percent: number;
 }
 export interface Color {
     color: string;
@@ -32,5 +33,6 @@ export interface Product extends Document {
     origin: string;
     capacity: Capacity[];
     rating: Rating[];
-    totalRating: Number;
+    totalRating: number;
+    seller: number;
 }

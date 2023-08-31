@@ -8,6 +8,11 @@ const CapacitySchema = new mongoose.Schema<Capacity>(
             required: true,
             index: true,
         },
+        percent: {
+            type: Number,
+            required: true,
+            index: true,
+        },
     },
     { timestamps: true }
 );

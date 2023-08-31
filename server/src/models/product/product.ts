@@ -38,7 +38,7 @@ const productSchema = new mongoose.Schema<Product>(
         color: [{ color: { type: String } }],
         ram: [
             {
-                title: { type: Number },
+                size: { type: Number },
             },
         ],
         origin: {
@@ -46,11 +46,16 @@ const productSchema = new mongoose.Schema<Product>(
         },
         capacity: [
             {
-                title: { type: Number },
+                size: { type: Number },
+                percent: { type: Number },
             },
         ],
         rating: [{ type: mongoose.Types.ObjectId, ref: "Rating" }],
         totalRating: {
+            type: Number,
+            default: 0,
+        },
+        seller: {
             type: Number,
             default: 0,
         },
