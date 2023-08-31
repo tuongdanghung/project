@@ -7,8 +7,6 @@ import {
     DialogFooter,
 } from "@material-tailwind/react";
 import { Modal } from "../../../../interface/client";
-
-import Required from "../required";
 import CheckBoxComponent from "../checkbox";
 import "./index.scss";
 import CheckBoxImage from "../checkBoxImage";
@@ -27,17 +25,19 @@ const ModalEditProduct: React.FC<Modal> = (props) => {
     const [valueCapacity, setValueCapacity] = useState<object[]>([]);
     const [valueColor, setValueColor] = useState<object[]>([]);
     const [itemImage, setItemImage] = useState<any>([]);
+    const [itemDescription, setDescription] = useState<any>("");
     const [valueImageFile, setValueImageFile] = useState<any>([]);
     const [valueImageCloud, setValueCloud] = useState<object>([]);
 
     useEffect(() => {
         setOpen(props.open);
         setItem(props.item);
-
+        setDescription(item.description);
         setItemInput({
             price: item.price,
             title: item.title,
-            description: item.description,
+            quantity: item.quantity,
+            seller: item.seller,
         });
         setItemSelect({
             category: item.category,
@@ -92,6 +92,7 @@ const ModalEditProduct: React.FC<Modal> = (props) => {
             open: false,
             id: item._id,
             ram: valueRam,
+            description: itemDescription,
             capacity: valueCapacity,
             color: valueColor,
             imageFile: valueImageFile,
@@ -191,6 +192,20 @@ const ModalEditProduct: React.FC<Modal> = (props) => {
                             changeValueCapacity={changeValueCapacity}
                             changeValueColor={changeValueColor}
                         />
+                    </div>
+                    <div className="mt-4 border border-separate rounded-lg p-4">
+                        <label className="block">Description</label>
+                        <textarea
+                            className="border border-separate rounded-lg w-full"
+                            value={itemDescription}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                        {/* <Required
+                                    value={description}
+                                    valid={checkValid.description}
+                                    keywords=" Description"
+                                    setShow={setCheckValid}
+                                /> */}
                     </div>
                     <div>
                         <CheckBoxImage

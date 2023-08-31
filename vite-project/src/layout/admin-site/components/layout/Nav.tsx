@@ -19,7 +19,7 @@ const Nav = () => {
         }
     };
     return (
-        <div className="p-4 bg-gray-900 h-full text-white">
+        <div className="p-4 bg-gray-900 text-white h-screen">
             <div className="flex flex-col items-center py-4 justify-center">
                 <Link to={path.HOME}>
                     <img

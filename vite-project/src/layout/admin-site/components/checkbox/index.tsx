@@ -37,13 +37,13 @@ const CheckBoxComponent = (props: any) => {
     const handleCheckboxRamChange = (size: any) => {
         const updatedCheckBoxSizes = [...itemValueRam];
         const sizeIndex = updatedCheckBoxSizes.findIndex(
-            (selectItem) => selectItem.title === size
+            (selectItem) => selectItem.size === size
         );
 
         if (sizeIndex !== -1) {
             updatedCheckBoxSizes.splice(sizeIndex, 1); // Loại bỏ nếu đã tồn tại
         } else {
-            updatedCheckBoxSizes.push({ title: size }); // Thêm nếu chưa tồn tại
+            updatedCheckBoxSizes.push({ size: size }); // Thêm nếu chưa tồn tại
         }
         props.changeValueRam(updatedCheckBoxSizes);
         setItemValueRam(updatedCheckBoxSizes);
@@ -51,15 +51,24 @@ const CheckBoxComponent = (props: any) => {
     const handleCheckboxCapacityChange = (size: any) => {
         const updatedCheckBoxSizes = [...itemValueCapacity];
         const sizeIndex = updatedCheckBoxSizes.findIndex(
-            (selectItem) => selectItem.title === size
+            (selectItem) => selectItem.size === size
         );
         if (sizeIndex !== -1) {
             updatedCheckBoxSizes.splice(sizeIndex, 1);
         } else {
-            updatedCheckBoxSizes.push({ title: size });
+            updatedCheckBoxSizes.push({ size: size });
         }
-        props.changeValueCapacity(updatedCheckBoxSizes);
-        setItemValueCapacity(updatedCheckBoxSizes);
+        const result = capacity
+            .filter((itemA: any) =>
+                updatedCheckBoxSizes?.some(
+                    (itemB: any) => itemA.size === itemB.size
+                )
+            )
+            .map(
+                ({ _id, ...rest }: { id: string; [key: string]: any }) => rest
+            );
+        props.changeValueCapacity(result);
+        setItemValueCapacity(result);
     };
     const handleCheckboxColorChange = (color: any) => {
         const updatedCheckBoxColor = [...itemValueColor];
@@ -81,7 +90,7 @@ const CheckBoxComponent = (props: any) => {
                 <div className="grid grid-cols-3 gap-5">
                     {uniqueSizesRam?.map((size: any, index) => {
                         const isSizeInSelect = itemValueRam?.some(
-                            (selectItem: any) => selectItem.title === size
+                            (selectItem: any) => selectItem.size === size
                         );
                         return (
                             <div
@@ -107,7 +116,7 @@ const CheckBoxComponent = (props: any) => {
                 <div className="grid grid-cols-3 gap-5">
                     {uniqueSizesCapacity?.map((size: any, index) => {
                         const isSizeInSelect = itemValueCapacity?.some(
-                            (selectItem: any) => selectItem.title === size
+                            (selectItem: any) => selectItem.size === size
                         );
                         return (
                             <div

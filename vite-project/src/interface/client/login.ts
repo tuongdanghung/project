@@ -14,6 +14,7 @@ export interface CheckValidInterface {
     color?: boolean;
     capacity?: boolean;
     description?: boolean;
+    seller?: boolean;
     quantity?: boolean;
     valueAddNewBrand?: boolean;
 }

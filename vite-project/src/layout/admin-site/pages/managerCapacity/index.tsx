@@ -16,7 +16,7 @@ import { AppDispatch } from "../../../../store";
 import { apiDeleteCapacity } from "../../../../apis";
 import DialogComponent from "../../components/modal/modalUpdate";
 import { ToastContainer, toast } from "react-toastify";
-const TABLE_HEAD = ["Title", ""];
+const TABLE_HEAD = ["Title", "Percent", ""];
 
 const ManagerCapacity: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
@@ -87,6 +87,17 @@ const ManagerCapacity: React.FC = () => {
                                                 className="font-bold"
                                             >
                                                 {item.size}
+                                            </Typography>
+                                        </div>
+                                    </td>
+                                    <td className={classes}>
+                                        <div className="flex items-center gap-3 justify-center">
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-bold"
+                                            >
+                                                {item.percent}
                                             </Typography>
                                         </div>
                                     </td>

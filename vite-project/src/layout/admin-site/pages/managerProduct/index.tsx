@@ -28,6 +28,8 @@ import Snipper from "../../components/snipper";
 const TABLE_HEAD = [
     "Title",
     "Price",
+    "Quantity",
+    "Seller",
     "Category",
     "Brand",
     "Total Rating",
@@ -126,7 +128,15 @@ const ManagerProduct = () => {
                         {data?.map((item: any, index: any) => {
                             const isLast = index === data.length - 1;
                             const price: number = item.price;
-                            const formattedNumber: string = price
+                            const quantity: number = item?.quantity;
+                            const seller: number = item?.seller;
+                            const formattedPrice: string = price
+                                .toLocaleString("en-US")
+                                .replace(/,/g, ".");
+                            const formattedQuantity: string = quantity
+                                .toLocaleString("en-US")
+                                .replace(/,/g, ".");
+                            const formattedSeller: string = seller
                                 .toLocaleString("en-US")
                                 .replace(/,/g, ".");
                             const classes = isLast
@@ -140,7 +150,13 @@ const ManagerProduct = () => {
                                         </div>
                                     </td>
                                     <td className={classes}>
-                                        {formattedNumber} $
+                                        {formattedPrice} $
+                                    </td>
+                                    <td className={classes}>
+                                        {formattedQuantity} $
+                                    </td>
+                                    <td className={classes}>
+                                        {formattedSeller} %
                                     </td>
                                     <td className={classes}>{item.category}</td>
                                     <td className={classes}>{item.brand}</td>
@@ -157,9 +173,7 @@ const ManagerProduct = () => {
                                             alt=""
                                         />
                                     </td>
-                                    <td
-                                        className={`${classes} flex justify-center`}
-                                    >
+                                    <td className={`${classes}`}>
                                         <Button
                                             onClick={() =>
                                                 handleDelete(item._id)

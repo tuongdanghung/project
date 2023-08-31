@@ -53,10 +53,11 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
     const [title, setTitle] = useState<string>("");
     const [price, setPrice] = useState<number>(0);
     const [quantity, setQuantity] = useState<number>(0);
+    const [seller, setSeller] = useState<number>(0);
     const [description, setDescription] = useState<string>("");
     const [itemValueBrand, setItemValueBrand] = useState<any>("");
     const [itemValueCategory, setItemValueCategory] = useState<any>("");
-    const [value, setValue] = useState<string>("");
+    const [value, setValue] = useState<any>("");
     const [checkValid, setCheckValid] = useState<CheckValidInterface>({
         title: false,
         price: false,
@@ -110,12 +111,12 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
     const handleCheckboxRamChange = (size: any) => {
         const updatedCheckBoxSizes = [...itemValueRam];
         const sizeIndex = updatedCheckBoxSizes.findIndex(
-            (selectItem) => selectItem.title === size
+            (selectItem) => selectItem.size === size
         );
         if (sizeIndex !== -1) {
             updatedCheckBoxSizes.splice(sizeIndex, 1); // Loại bỏ nếu đã tồn tại
         } else {
-            updatedCheckBoxSizes.push({ title: size }); // Thêm nếu chưa tồn tại
+            updatedCheckBoxSizes.push({ size: size }); // Thêm nếu chưa tồn tại
         }
         setItemValueRam(updatedCheckBoxSizes);
     };
@@ -139,9 +140,18 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
         if (sizeIndex !== -1) {
             updatedCheckBoxSizes.splice(sizeIndex, 1);
         } else {
-            updatedCheckBoxSizes.push({ title: size });
+            updatedCheckBoxSizes.push({ size: size });
         }
-        setItemValueCapacity(updatedCheckBoxSizes);
+        const result = capacity
+            .filter((itemA: any) =>
+                updatedCheckBoxSizes.some(
+                    (itemB: any) => itemA.size === itemB.size
+                )
+            )
+            .map(
+                ({ _id, ...rest }: { id: string; [key: string]: any }) => rest
+            );
+        setItemValueCapacity(result);
     };
     const handleCreate = async () => {
         if (slug === "manager-product") {
@@ -210,6 +220,7 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                 price,
                 description,
                 image,
+                seller,
                 brand: itemValueBrand,
                 category: itemValueCategory,
                 quantity,
@@ -337,7 +348,8 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
             }
             if (value !== "") {
                 const response = await apiCreateCapacity({
-                    size: Number(value),
+                    size: Number(value.size),
+                    percent: Number(value.percent),
                 });
                 if (response.data.success) {
                     setIsSnipper(false);
@@ -436,7 +448,24 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                                         setShow={setCheckValid}
                                     />
                                 </div>
-                                <div>
+                                <div className="mt-4">
+                                    <label className="block">Seller</label>
+                                    <input
+                                        className="border border-collapse rounded-lg w-full"
+                                        type="number"
+                                        value={seller}
+                                        onChange={(e) =>
+                                            setSeller(Number(e.target.value))
+                                        }
+                                    />
+                                    <Required
+                                        value={seller}
+                                        valid={checkValid.seller}
+                                        keywords="Seller"
+                                        setShow={setCheckValid}
+                                    />
+                                </div>
+                                <div className="mt-4">
                                     <label className="block">Brand</label>
                                     <select
                                         className="border border-collapse rounded-lg w-full"
@@ -462,7 +491,7 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                                         setShow={setCheckValid}
                                     />
                                 </div>
-                                <div>
+                                <div className="mt-4">
                                     <label className="block">Category</label>
                                     <select
                                         className="border border-collapse rounded-lg w-full"
