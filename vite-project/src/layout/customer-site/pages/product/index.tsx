@@ -31,7 +31,7 @@ const Product = () => {
     );
     const token = localStorage.getItem("auth");
     useEffect(() => {
-        dispatch(GetAllProduct({ token, params: params.slug }));
+        dispatch(GetAllProduct(token));
     }, []);
     return (
         <div>

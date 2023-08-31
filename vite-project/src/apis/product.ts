@@ -10,7 +10,7 @@ export const apiCreateProduct = (data: any) =>
 
 export const apiGetAllProduct = (data: any) =>
     axios({
-        url: `/product?${data.params ? data.params : ""}`,
+        url: `/product`,
         method: "GET",
         headers: { Authorization: `Bearer ${data.token}` },
     });
