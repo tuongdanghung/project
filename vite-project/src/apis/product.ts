@@ -8,11 +8,11 @@ export const apiCreateProduct = (data: any) =>
         headers: { Authorization: `Bearer ${token}` },
     });
 
-export const apiGetAllProduct = (token: any) =>
+export const apiGetAllProduct = (data: any) =>
     axios({
-        url: "/product",
+        url: `/product?${data.params ? data.params : ""}`,
         method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${data.token}` },
     });
 
 export const apiProductDetail = (detail: any) =>

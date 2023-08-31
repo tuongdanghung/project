@@ -24,7 +24,7 @@ const Brand = () => {
                         <li key={item._id} className="mb-4">
                             <Link
                                 className="text-gray-900 hover:text-blue-500 flex items-center"
-                                to={`/${path.PRODUCTS}/${item.slug}`}
+                                to={`/${path.PRODUCTS}/${item.title}`}
                             >
                                 <img
                                     src={item.img}

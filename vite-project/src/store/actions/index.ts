@@ -26,8 +26,8 @@ export const GetOneUser = createAsyncThunk<any, any, type.UserType>(
 
 export const GetAllProduct = createAsyncThunk<any, any, type.ProductType>(
     "product",
-    async (token: string, { rejectWithValue }) => {
-        const response = await apis.apiGetAllProduct(token);
+    async (data: any, { rejectWithValue }) => {
+        const response = await apis.apiGetAllProduct(data);
         if (!(response as any).data.success) {
             return rejectWithValue("Error fetching data");
         }
