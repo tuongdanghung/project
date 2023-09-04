@@ -250,14 +250,12 @@ const updateUser = asyncHandler(async (req: any, res: Response) => {
 const updateUserByAdmin = asyncHandler(async (req: any, res: Response) => {
     //
     const { uid } = req.params;
-    console.log(req.body);
     // user lấy từ token
     if (Object.keys(req.body).length === 0) throw new Error("Missing inputs");
 
     const response = await UserModel.findByIdAndUpdate(uid, req.body, {
         new: true,
     }).select("-password -role -refreshToken -createdAt -updatedAt -__v");
-    console.log(response);
     return res.status(200).json({
         success: response ? true : false,
         data: response ? response : "Some thing went wrong",
@@ -283,6 +281,78 @@ const addressUser = asyncHandler(async (req: any, res: Response) => {
 });
 // edit address
 
+const updateCart = asyncHandler(async (req: any, res: Response) => {
+    const { _id } = req.user;
+    const { pid, quantity, color, ram, capacity } = req.body;
+    // mặc định số lượng trong giỏ hàng là 1
+    // user lấy từ token
+    if (!pid) throw new Error("Missing inputs");
+    const user = await UserModel.findById(_id).select("cart");
+    const alreadyProduct = user?.cart?.find(
+        (el: any) => el.product.toString() === pid && el.color === color && el.ram === ram && el.capacity.size === capacity.size
+    );
+    // tìm trong giỏ hàng có sp hay chưa
+    if (alreadyProduct) {
+        // dat tim thay
+        const response = await UserModel.updateOne(
+            { cart: { $elemMatch: alreadyProduct } },
+            {
+                $set: {
+                    "cart.$.quantity": alreadyProduct.quantity + quantity,
+                    "cart.$.color": color,
+                    "cart.$.capacity": capacity,
+                    "cart.$.ram": ram,
+                },
+            },
+            { new: true }
+        );
+        return res.status(200).json({
+            success: response ? true : false,
+            data: response
+                ? "add to cart successfully"
+                : "Some thing went wrong",
+        });
+    } else {
+        const response = await UserModel.findByIdAndUpdate(
+            _id,
+            { $push: { cart: { product: pid, quantity, color, capacity, ram } } },
+            { new: true }
+        );
+        return res.status(200).json({
+            success: response ? true : false,
+            message: response
+                ? "add to cart successfully"
+                : "Some thing went wrong",
+        });
+    }
+});
+// add to cart
+const removeCart = asyncHandler(async (req: any, res: Response) => {
+    const { _id } = req.user;
+    const { pid } = req.params;
+    // user lấy từ token
+    const user = await UserModel.findById(_id).select("cart");
+    const alreadyProduct = user?.cart?.find(
+        (el: any) => el.id.toString() === pid
+    );
+    // tìm trong giỏ hàng có sp hay chưa
+    if (!alreadyProduct) {
+        return res.status(200).json({
+            success: true,
+            message: "khong co trong gio hang",
+        });
+    }
+    const response = await UserModel.findByIdAndUpdate(
+        _id,
+        { $pull: { cart: { _id: pid } } },
+        { new: true }
+    );
+    return res.status(200).json({
+        success: response ? true : false,
+        data: response ? response : "Some thing went wrong",
+    });
+});
+// remove cart
 module.exports = {
     register,
     login,
@@ -294,4 +364,6 @@ module.exports = {
     addressUser,
     updateUser,
     updateUserByAdmin,
+    updateCart,
+    removeCart
 };

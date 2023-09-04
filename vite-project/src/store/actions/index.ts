@@ -100,3 +100,14 @@ export const GetColor = createAsyncThunk<any, any, type.ProductType>(
         return response.data.data;
     }
 );
+
+export const GetAllOrder = createAsyncThunk<any, any, type.ProductType>(
+    "order",
+    async (token: string, { rejectWithValue }) => {
+        const response = await apis.apiGetAllOrder(token);
+        if (!(response as any).data.success) {
+            return rejectWithValue("Error fetching data");
+        }
+        return response.data.data;
+    }
+);

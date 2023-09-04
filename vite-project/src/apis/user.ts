@@ -43,3 +43,16 @@ export const apiUpdateUserByAdmin = (data: any) =>
         data: data,
         headers: { Authorization: `Bearer ${data.token}` },
     });
+export const apiUpdateCart = (data: any) =>
+    axios({
+        url: `/user/update/cart`,
+        method: "PUT",
+        data: data,
+        headers: { Authorization: `Bearer ${data.token}` },
+    });
+export const apiDeleteCart = (data: any) =>
+    axios({
+        url: `/user/delete-cart/${data.id}`,
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${data.token}` },
+    });

@@ -73,12 +73,12 @@ const SignUp = () => {
         ) {
             setIsSnipper(true);
             const response = await apiRegister(payload);
-            if ((response as any).success) {
+            if ((response as any).data.success) {
                 setIsShow(true);
                 setIsSnipper(false);
                 resetPayload();
             } else {
-                Swal.fire("Oops!", (response as any).message, "error");
+                Swal.fire("Oops!", (response as any).data.message, "error");
                 setIsSnipper(false);
             }
         }

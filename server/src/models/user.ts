@@ -46,10 +46,10 @@ const userSchema = new mongoose.Schema<User>(
         cart: [
             {
                 product: { type: mongoose.Types.ObjectId, ref: "Product" },
-                quantity: Number,
-                color: String,
-                price: Number,
-                title: String,
+                quantity: { type: Number },
+                ram: { type: Number },
+                capacity: { size: { type: Number }, percent: { type: Number } },
+                color: { type: String },
             },
         ],
         address: [
