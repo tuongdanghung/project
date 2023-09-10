@@ -11,12 +11,6 @@ export interface Capacity {
 export interface Color {
     color: string;
 }
-export interface Rating {
-    star: number;
-    postedBy: string;
-    comment: string;
-    user: string;
-}
 
 export interface Product extends Document {
     title: string;
@@ -32,7 +26,7 @@ export interface Product extends Document {
     ram: Ram[];
     origin: string;
     capacity: Capacity[];
-    rating: Rating[];
+    rating: any;
     totalRating: number;
     seller: number;
 }

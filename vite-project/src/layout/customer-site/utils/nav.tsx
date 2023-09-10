@@ -39,13 +39,13 @@ export const profileMenuItems = [
         icon: UserCircleIcon,
     },
     {
-        label: "Inbox",
-        path: `${path.INBOX}`,
+        label: "History order",
+        path: `${path.HISTORY}`,
         icon: InboxArrowDownIcon,
     },
     {
         label: "Help",
-        path: `${path.INBOX}`,
+        path: `${path.HISTORY}`,
         icon: LifebuoyIcon,
     },
     {

@@ -2,7 +2,6 @@ const asyncHandler = require("express-async-handler");
 import { Request, Response } from "express";
 const slugify = require("slugify");
 const ProductModel = require("../../models/product/product");
-const UserModel = require("../../models/user");
 
 const createProduct = asyncHandler(async (req: any, res: Response) => {
     const { title } = req.body;
@@ -34,14 +33,17 @@ const createProduct = asyncHandler(async (req: any, res: Response) => {
 const getOneProduct = asyncHandler(async (req: Request, res: Response) => {
     const { pid } = req.params;
     if (!pid) throw new Error("missing input");
-    const response = await ProductModel.findById(pid).select(
-        "-createdAt -updatedAt -__v"
-    );
+
+    const response = await ProductModel.findById(pid)
+        .populate("rating")
+        .select("-createdAt -updatedAt -__v");
+
     return res.status(200).json({
         success: response ? true : false,
         data: response ? response : "can not details product",
     });
 });
+
 // get One Product
 
 const getAllProduct = asyncHandler(async (req: any, res: Response) => {

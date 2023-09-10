@@ -21,7 +21,7 @@ const Capacity: React.FC<Props> = (props) => {
     );
     const token = localStorage.getItem("auth");
     useEffect(() => {
-        dispatch(GetCapacity(token));
+        dispatch(GetCapacity(null));
         setId(props.id);
         setTitle(capacity.find((item: any) => item._id === id));
     }, [props.id]);

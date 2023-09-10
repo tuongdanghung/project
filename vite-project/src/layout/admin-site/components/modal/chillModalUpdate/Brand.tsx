@@ -19,7 +19,7 @@ const Brand: React.FC<Props> = (props) => {
     const brand = useSelector((state: any) => state?.productReducer.brand);
     const token = localStorage.getItem("auth");
     useEffect(() => {
-        dispatch(GetBrand(token));
+        dispatch(GetBrand(null));
         setId(props.id);
         setTitle(brand.find((item: any) => item._id === id));
     }, [props.id]);

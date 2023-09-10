@@ -19,7 +19,7 @@ const Ram: React.FC<Props> = (props) => {
     const ram = useSelector((state: any) => state?.productReducer.ram);
     const token = localStorage.getItem("auth");
     useEffect(() => {
-        dispatch(GetRam(token));
+        dispatch(GetRam(null));
         setId(props.id);
         setTitle(ram.find((item: any) => item._id === id));
     }, [props.id]);

@@ -8,10 +8,11 @@ export const apiCreateBrand = (data: any) =>
         headers: { Authorization: `Bearer ${token}` },
     });
 
-export const apiGetAllBrand = (token: string) =>
+export const apiGetAllBrand = (data: string) =>
     axios({
         url: "/brand",
         method: "GET",
+        params: data,
         headers: { Authorization: `Bearer ${token}` },
     });
 export const apiDeleteBrand = (data: any) =>

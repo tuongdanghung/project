@@ -5,6 +5,7 @@ export const appSlice = createSlice({
     name: "orders",
     initialState: {
         orders: null,
+        orderByUser: null,
         isLoading: false,
     },
     reducers: {},
@@ -17,7 +18,10 @@ export const appSlice = createSlice({
             state.isLoading = false;
             state.orders = action.payload;
         });
-
+        builder.addCase(actions.GetOneOrder.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.orderByUser = action.payload;
+        });
         builder.addCase(actions.GetAllOrder.rejected, (state) => {
             state.isLoading = false;
         });

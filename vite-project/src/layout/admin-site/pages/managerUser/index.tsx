@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AiFillLock, AiFillUnlock } from "react-icons/ai";
 import {
     Card,
@@ -13,8 +13,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../../components/pagination";
 import Head from "../../components/layout/Head";
-import Search from "../../components/search";
-import Download from "../../components/download";
 import { GetAllUsersByAdmin } from "../../../../store/actions";
 import { AppDispatch } from "../../../../store";
 import { apiUpdateUserByAdmin } from "../../../../apis";
@@ -30,32 +28,30 @@ const TABLE_HEAD = [
 
 const ManagerUsers = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const data = useSelector((state: any) => state?.userReducer?.users);
+    const users = useSelector((state: any) => state?.userReducer?.users);
+    const [data, setData] = useState<any>([]);
     const token = localStorage.getItem("auth");
     useEffect(() => {
-        dispatch(GetAllUsersByAdmin(token));
+        dispatch(GetAllUsersByAdmin(null));
     }, []);
     const handleEdit = async (id: string) => {
-        const user = data?.find((user: any) => user._id === id);
+        const user = users?.find((user: any) => user._id === id);
         const payload = { isBlocked: !user.isBlocked, id: id, token: token };
         const response = await apiUpdateUserByAdmin(payload);
         if ((response as any).data.success) {
-            dispatch(GetAllUsersByAdmin(token));
+            dispatch(GetAllUsersByAdmin(null));
             toast.success("Updated user successfully");
         } else {
             toast.error("Updated user failed");
         }
     };
+    const handlePage = (pagination: any) => {
+        setData(pagination);
+    };
     return (
         <Card className="h-full w-full">
             <CardHeader floated={false} shadow={false} className="rounded-none">
-                <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
-                    <Head title={"Manager User"} slug={"manager-user"} />
-                    <div className="flex w-full shrink-0 gap-2 md:w-max">
-                        <Search />
-                        <Download />
-                    </div>
-                </div>
+                <Head title={"Manager User"} slug={"manager-user"} />
             </CardHeader>
             <CardBody className="px-0">
                 <table className="w-full min-w-max table-auto text-left">
@@ -178,7 +174,7 @@ const ManagerUsers = () => {
                 </table>
             </CardBody>
             <CardFooter className="flex items-center border-t border-blue-gray-50 p-4 justify-center">
-                <Pagination />
+                <Pagination data={users} handlePage={handlePage} />
             </CardFooter>
             <ToastContainer />
         </Card>

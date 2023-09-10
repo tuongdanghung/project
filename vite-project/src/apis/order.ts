@@ -1,13 +1,21 @@
 import axios from "../config/axios";
 
-export const apiCreateOrder = (token: any) =>
+export const apiCreateOrder = (data: any) =>
     axios({
         url: "/order/create",
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
+        data,
+        headers: { Authorization: `Bearer ${data.token}` },
     });
 
 export const apiGetAllOrder = (token: string) =>
+    axios({
+        url: "/order/admin",
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
+export const apiGetOrder = (token: string) =>
     axios({
         url: "/order",
         method: "GET",

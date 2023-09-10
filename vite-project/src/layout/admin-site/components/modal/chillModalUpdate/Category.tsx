@@ -21,7 +21,7 @@ const Category: React.FC<Props> = (props) => {
     );
     const token = localStorage.getItem("auth");
     useEffect(() => {
-        dispatch(GetCategory(token));
+        dispatch(GetCategory(null));
         setId(props.id);
         setTitle(category.find((item: any) => item._id === id));
     }, [props.id]);

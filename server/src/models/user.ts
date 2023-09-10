@@ -50,6 +50,7 @@ const userSchema = new mongoose.Schema<User>(
                 ram: { type: Number },
                 capacity: { size: { type: Number }, percent: { type: Number } },
                 color: { type: String },
+                totalPrice: { type: Number },
             },
         ],
         address: [

@@ -8,10 +8,11 @@ export const apiCreateCategory = (data: any) =>
         headers: { Authorization: `Bearer ${token}` },
     });
 
-export const apiGetAllCategory = (token: string) =>
+export const apiGetAllCategory = (data: string) =>
     axios({
         url: "/category",
         method: "GET",
+        params: data,
         headers: { Authorization: `Bearer ${token}` },
     });
 

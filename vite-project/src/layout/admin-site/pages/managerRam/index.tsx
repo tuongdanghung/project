@@ -20,6 +20,7 @@ const TABLE_HEAD = ["Title", ""];
 
 const ManagerRam: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
+    const [data, setData] = useState<any>([]);
     const dispatch = useDispatch<AppDispatch>();
     const token = localStorage.getItem("auth");
     const ram = useSelector((state: any) => state?.productReducer.ram);
@@ -31,7 +32,7 @@ const ManagerRam: React.FC = () => {
         const payload = { id, token: token };
         const response = await apiDeleteRam(payload);
         if (response.data.success) {
-            dispatch(GetRam(token));
+            dispatch(GetRam(null));
             toast.success("Delete ram successfully");
         } else {
             toast.error("Delete ram failed");
@@ -43,6 +44,9 @@ const ManagerRam: React.FC = () => {
     };
     const handleClose = (close: boolean) => {
         setOpen(close);
+    };
+    const handlePage = (pagination: any) => {
+        setData(pagination);
     };
     return (
         <Card className="h-full w-full">
@@ -116,7 +120,7 @@ const ManagerRam: React.FC = () => {
                 </table>
             </CardBody>
             <CardFooter className="flex items-center border-t border-blue-gray-50 p-4 justify-center">
-                <Pagination />
+                <Pagination data={ram} handlePage={handlePage} />
             </CardFooter>
             <DialogComponent
                 id={id}

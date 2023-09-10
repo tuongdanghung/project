@@ -39,7 +39,10 @@ const TABLE_HEAD = [
 const ManagerProduct = () => {
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
-    const data = useSelector((state: any) => state?.productReducer?.products);
+    const [data, setData] = useState<any>([]);
+    const product = useSelector(
+        (state: any) => state?.productReducer?.products
+    );
     const item = useSelector((state: any) => state?.productReducer.detail);
     const brand = useSelector((state: any) => state?.productReducer.brand);
     const ram = useSelector((state: any) => state?.productReducer.ram);
@@ -52,17 +55,19 @@ const ManagerProduct = () => {
         (state: any) => state?.productReducer.category
     );
     const token = localStorage.getItem("auth");
+
     useEffect(() => {
-        dispatch(GetAllProduct(token));
-        dispatch(GetRam(token));
-        dispatch(GetCapacity(token));
-        dispatch(GetColor(token));
+        dispatch(GetAllProduct(null));
+        dispatch(GetRam(null));
+        dispatch(GetCapacity(null));
+        dispatch(GetColor(null));
     }, [item]);
+
     const handleDelete = async (id: string) => {
         const payload = { id: id, token: token };
         const response = await apiDeleteProduct(payload);
         if (response.data.success) {
-            dispatch(GetAllProduct(token));
+            dispatch(GetAllProduct(null));
             toast.success("Delete product successfully");
         } else {
             toast.error("Delete product failed");
@@ -72,8 +77,8 @@ const ManagerProduct = () => {
     const handleOpen = (id: string) => {
         const detail = { id: id, token: token };
         dispatch(GetProductDetail(detail));
-        dispatch(GetBrand(token));
-        dispatch(GetCategory(token));
+        dispatch(GetBrand(null));
+        dispatch(GetCategory(null));
         setOpen(!open);
     };
     const handleClose = (close: boolean) => {
@@ -97,11 +102,15 @@ const ManagerProduct = () => {
         const response = await apiEditProduct(formData, item._id);
         if (response.data.success) {
             setIsSnipper(false);
-            dispatch(GetAllProduct(token));
+            dispatch(GetAllProduct(null));
             toast.success("Updated product successfully");
         } else {
             toast.error("Updated product failed");
         }
+    };
+
+    const handlePage = (pagination: any) => {
+        setData(pagination);
     };
 
     return (
@@ -126,7 +135,7 @@ const ManagerProduct = () => {
                     </thead>
                     <tbody>
                         {data?.map((item: any, index: any) => {
-                            const isLast = index === data.length - 1;
+                            const isLast = index === product.length - 1;
                             const price: number = item.price;
                             const quantity: number = item?.quantity;
                             const seller: number = item?.seller;
@@ -197,7 +206,7 @@ const ManagerProduct = () => {
                 </table>
             </CardBody>
             <CardFooter className="flex items-center border-t border-blue-gray-50 p-4 justify-center">
-                <Pagination />
+                <Pagination data={product} handlePage={handlePage} />
             </CardFooter>
             <ModalEditProduct
                 open={open}

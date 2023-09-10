@@ -21,19 +21,20 @@ const TABLE_HEAD = ["Title", "Percent", ""];
 const ManagerCapacity: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
+    const [data, setData] = useState<any>([]);
     const token = localStorage.getItem("auth");
     const capacity = useSelector(
         (state: any) => state?.productReducer.capacity
     );
     const [id, setId] = useState<string>("");
     useEffect(() => {
-        dispatch(GetCapacity(token));
+        dispatch(GetCapacity(null));
     }, []);
     const handleDelete = async (id: string) => {
         const payload = { id, token: token };
         const response = await apiDeleteCapacity(payload);
         if (response.data.success) {
-            dispatch(GetCapacity(token));
+            dispatch(GetCapacity(null));
             toast.success("Delete ram successfully");
         } else {
             toast.error("Delete ram failed");
@@ -45,6 +46,9 @@ const ManagerCapacity: React.FC = () => {
     };
     const handleClose = (close: boolean) => {
         setOpen(close);
+    };
+    const handlePage = (pagination: any) => {
+        setData(pagination);
     };
     return (
         <Card className="h-full w-full">
@@ -72,7 +76,7 @@ const ManagerCapacity: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {capacity?.map((item: any, index: any) => {
+                        {data?.map((item: any, index: any) => {
                             const isLast = index === item.length - 1;
                             const classes = isLast
                                 ? "p-4"
@@ -129,7 +133,7 @@ const ManagerCapacity: React.FC = () => {
                 </table>
             </CardBody>
             <CardFooter className="flex items-center border-t border-blue-gray-50 p-4 justify-center">
-                <Pagination />
+                <Pagination data={capacity} handlePage={handlePage} />
             </CardFooter>
             <DialogComponent
                 id={id}

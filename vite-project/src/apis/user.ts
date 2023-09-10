@@ -1,8 +1,10 @@
 import axios from "../config/axios";
-export const apiGetAllUer = (token: any) =>
+const token = localStorage.getItem("auth");
+export const apiGetAllUer = (params: any) =>
     axios({
         url: "/user",
         method: "GET",
+        params: { email: params },
         headers: { Authorization: `Bearer ${token}` },
     });
 

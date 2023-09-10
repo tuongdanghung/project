@@ -124,7 +124,7 @@ const me = asyncHandler(async (req: any, res: Response) => {
             populate: {
                 path: "product",
                 // fill vao obj product trong cart
-                select: "title price image",
+                select: "title price image quantity",
                 // lay cac truong mong muon
             },
         });
@@ -283,13 +283,18 @@ const addressUser = asyncHandler(async (req: any, res: Response) => {
 
 const updateCart = asyncHandler(async (req: any, res: Response) => {
     const { _id } = req.user;
-    const { pid, quantity, color, ram, capacity } = req.body;
+    const { pid, quantity, color, ram, capacity, price } = req.body;
+    console.log({ pid, quantity, color, ram, capacity, price });
     // mặc định số lượng trong giỏ hàng là 1
     // user lấy từ token
     if (!pid) throw new Error("Missing inputs");
     const user = await UserModel.findById(_id).select("cart");
     const alreadyProduct = user?.cart?.find(
-        (el: any) => el.product.toString() === pid && el.color === color && el.ram === ram && el.capacity.size === capacity.size
+        (el: any) =>
+            el.product.toString() === pid &&
+            el.color === color &&
+            el.ram === ram &&
+            el.capacity.size === capacity.size
     );
     // tìm trong giỏ hàng có sp hay chưa
     if (alreadyProduct) {
@@ -302,6 +307,7 @@ const updateCart = asyncHandler(async (req: any, res: Response) => {
                     "cart.$.color": color,
                     "cart.$.capacity": capacity,
                     "cart.$.ram": ram,
+                    "cart.$.totalPrice": alreadyProduct.totalPrice + price,
                 },
             },
             { new: true }
@@ -315,7 +321,18 @@ const updateCart = asyncHandler(async (req: any, res: Response) => {
     } else {
         const response = await UserModel.findByIdAndUpdate(
             _id,
-            { $push: { cart: { product: pid, quantity, color, capacity, ram } } },
+            {
+                $push: {
+                    cart: {
+                        product: pid,
+                        quantity,
+                        color,
+                        capacity,
+                        ram,
+                        totalPrice: price,
+                    },
+                },
+            },
             { new: true }
         );
         return res.status(200).json({
@@ -365,5 +382,5 @@ module.exports = {
     updateUser,
     updateUserByAdmin,
     updateCart,
-    removeCart
+    removeCart,
 };

@@ -21,19 +21,20 @@ const TABLE_HEAD = ["Title", ""];
 const ManagerCategory: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
+    const [data, setData] = useState<any>([]);
     const token = localStorage.getItem("auth");
     const category = useSelector(
         (state: any) => state?.productReducer.category
     );
     const [id, setId] = useState<string>("");
     useEffect(() => {
-        dispatch(GetCategory(token));
+        dispatch(GetCategory(null));
     }, []);
     const handleDelete = async (id: string) => {
         const payload = { id, token: token };
         const response = await apiDeleteCategory(payload);
         if (response.data.success) {
-            dispatch(GetCategory(token));
+            dispatch(GetCategory(null));
             toast.success("Delete category successfully");
         } else {
             toast.error("Delete category failed");
@@ -45,6 +46,10 @@ const ManagerCategory: React.FC = () => {
     };
     const handleClose = (close: boolean) => {
         setOpen(close);
+    };
+
+    const handlePage = (pagination: any) => {
+        setData(pagination);
     };
     return (
         <Card className="h-full w-full">
@@ -72,7 +77,7 @@ const ManagerCategory: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {category?.map((item: any, index: any) => {
+                        {data?.map((item: any, index: any) => {
                             const isLast = index === item.length - 1;
                             const classes = isLast
                                 ? "p-4"
@@ -118,7 +123,7 @@ const ManagerCategory: React.FC = () => {
                 </table>
             </CardBody>
             <CardFooter className="flex items-center border-t border-blue-gray-50 p-4 justify-center">
-                <Pagination />
+                <Pagination data={category} handlePage={handlePage} />
             </CardFooter>
             <DialogComponent
                 id={id}

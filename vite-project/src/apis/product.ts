@@ -11,8 +11,9 @@ export const apiCreateProduct = (data: any) =>
 export const apiGetAllProduct = (data: any) =>
     axios({
         url: `/product`,
+        params: data,
         method: "GET",
-        headers: { Authorization: `Bearer ${data.token}` },
+        headers: { Authorization: `Bearer ${token}` },
     });
 
 export const apiProductDetail = (detail: any) =>
@@ -46,10 +47,11 @@ export const apiCreateRam = (data: any) =>
         headers: { Authorization: `Bearer ${token}` },
     });
 
-export const apiGetAllRam = (token: any) =>
+export const apiGetAllRam = (data: any) =>
     axios({
         url: "/ram",
         method: "GET",
+        params: data,
         headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -76,9 +78,10 @@ export const apiCreateCapacity = (data: any) =>
         headers: { Authorization: `Bearer ${token}` },
     });
 
-export const apiGetAllCapacity = (token: any) =>
+export const apiGetAllCapacity = (data: any) =>
     axios({
         url: "/capacity",
+        params: data,
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
     });
@@ -104,10 +107,11 @@ export const apiCreateColor = (data: any) =>
         headers: { Authorization: `Bearer ${token}` },
     });
 
-export const apiGetAllColor = (token: any) =>
+export const apiGetAllColor = (data: any) =>
     axios({
         url: "/color",
         method: "GET",
+        params: data,
         headers: { Authorization: `Bearer ${token}` },
     });
 

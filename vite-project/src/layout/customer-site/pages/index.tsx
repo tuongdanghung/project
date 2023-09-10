@@ -6,3 +6,4 @@ export { default as ProductDetail } from "./productDetail";
 export { default as Cart } from "./cart";
 export { default as Checkout } from "./checkout";
 export { default as Profile } from "./profile";
+export { default as HistoryOrder } from "./historyOrder";

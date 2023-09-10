@@ -15,13 +15,10 @@ const productSchema = new mongoose.Schema<Product>(
         },
         description: {
             type: String,
-            required: true,
-            unique: true,
         },
         brand: String,
         price: {
             type: Number,
-            required: true,
         },
         category: String,
         quantity: {
@@ -50,7 +47,7 @@ const productSchema = new mongoose.Schema<Product>(
                 percent: { type: Number },
             },
         ],
-        rating: [{ type: mongoose.Types.ObjectId, ref: "Rating" }],
+        rating: [{ type: mongoose.Types.ObjectId, ref: "Comment" }],
         totalRating: {
             type: Number,
             default: 0,

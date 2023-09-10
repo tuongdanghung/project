@@ -17,9 +17,8 @@ const Category: React.FC<Props> = (props) => {
         props.handleChange(value);
     };
     const color = useSelector((state: any) => state?.productReducer.color);
-    const token = localStorage.getItem("auth");
     useEffect(() => {
-        dispatch(GetColor(token));
+        dispatch(GetColor(null));
         setId(props.id);
         setTitle(color.find((item: any) => item._id === id));
     }, [props.id]);

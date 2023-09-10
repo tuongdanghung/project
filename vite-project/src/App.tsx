@@ -8,6 +8,7 @@ import {
     Product,
     ProductDetail,
     Profile,
+    HistoryOrder,
 } from "./layout/customer-site/pages";
 import {
     ExtendAdmin,
@@ -74,6 +75,10 @@ function App() {
                         <Route
                             path={path.MYPROFILE}
                             element={<Profile />}
+                        ></Route>
+                        <Route
+                            path={path.HISTORY}
+                            element={<HistoryOrder />}
                         ></Route>
 
                         {/* 

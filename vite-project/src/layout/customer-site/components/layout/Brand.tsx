@@ -11,7 +11,7 @@ const Brand = () => {
         (state: any) => state?.productReducer.category
     );
     useEffect(() => {
-        dispatch(GetCategory(token));
+        dispatch(GetCategory(null));
     }, []);
     return (
         <div className="p-4 sticky border border-collapse rounded-md m-0 top-7">

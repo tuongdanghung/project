@@ -4,8 +4,8 @@ import * as type from "../../interface/api";
 
 export const GetAllUsersByAdmin = createAsyncThunk<any, any, type.UserType>(
     "users",
-    async (token: string, { rejectWithValue }) => {
-        const response = await apis.apiGetAllUer(token);
+    async (data: string, { rejectWithValue }) => {
+        const response = await apis.apiGetAllUer(data);
         if (!(response as any).data.success) {
             return rejectWithValue("Error fetching data");
         }
@@ -48,8 +48,8 @@ export const GetProductDetail = createAsyncThunk<any, any, type.ProductType>(
 
 export const GetBrand = createAsyncThunk<any, any, type.ProductType>(
     "brand",
-    async (token: string, { rejectWithValue }) => {
-        const response = await apis.apiGetAllBrand(token);
+    async (data: string, { rejectWithValue }) => {
+        const response = await apis.apiGetAllBrand(data);
         if (!(response as any).data.success) {
             return rejectWithValue("Error fetching data");
         }
@@ -59,8 +59,8 @@ export const GetBrand = createAsyncThunk<any, any, type.ProductType>(
 
 export const GetCategory = createAsyncThunk<any, any, type.ProductType>(
     "category",
-    async (token: string, { rejectWithValue }) => {
-        const response = await apis.apiGetAllCategory(token);
+    async (data: string, { rejectWithValue }) => {
+        const response = await apis.apiGetAllCategory(data);
         if (!(response as any).data.success) {
             return rejectWithValue("Error fetching data");
         }
@@ -70,8 +70,8 @@ export const GetCategory = createAsyncThunk<any, any, type.ProductType>(
 
 export const GetRam = createAsyncThunk<any, any, type.ProductType>(
     "ram",
-    async (token: string, { rejectWithValue }) => {
-        const response = await apis.apiGetAllRam(token);
+    async (data: string, { rejectWithValue }) => {
+        const response = await apis.apiGetAllRam(data);
         if (!(response as any).data.success) {
             return rejectWithValue("Error fetching data");
         }
@@ -81,8 +81,8 @@ export const GetRam = createAsyncThunk<any, any, type.ProductType>(
 
 export const GetCapacity = createAsyncThunk<any, any, type.ProductType>(
     "capacity",
-    async (token: string, { rejectWithValue }) => {
-        const response = await apis.apiGetAllCapacity(token);
+    async (data: string, { rejectWithValue }) => {
+        const response = await apis.apiGetAllCapacity(data);
         if (!(response as any).data.success) {
             return rejectWithValue("Error fetching data");
         }
@@ -92,8 +92,8 @@ export const GetCapacity = createAsyncThunk<any, any, type.ProductType>(
 
 export const GetColor = createAsyncThunk<any, any, type.ProductType>(
     "color",
-    async (token: string, { rejectWithValue }) => {
-        const response = await apis.apiGetAllColor(token);
+    async (data: string, { rejectWithValue }) => {
+        const response = await apis.apiGetAllColor(data);
         if (!(response as any).data.success) {
             return rejectWithValue("Error fetching data");
         }
@@ -105,6 +105,17 @@ export const GetAllOrder = createAsyncThunk<any, any, type.ProductType>(
     "order",
     async (token: string, { rejectWithValue }) => {
         const response = await apis.apiGetAllOrder(token);
+        if (!(response as any).data.success) {
+            return rejectWithValue("Error fetching data");
+        }
+        return response.data.data;
+    }
+);
+
+export const GetOneOrder = createAsyncThunk<any, any, type.ProductType>(
+    "orderByUser",
+    async (token: string, { rejectWithValue }) => {
+        const response = await apis.apiGetOrder(token);
         if (!(response as any).data.success) {
             return rejectWithValue("Error fetching data");
         }

@@ -44,7 +44,7 @@ const Signin = () => {
                 );
                 navigate(
                     `${
-                        Number(response.data.secondary_role) !== 1
+                        Number(response.data.data.secondary_role) !== 1
                             ? `/${path.HOME}`
                             : `/admin/${pathAdmin.DASHBOARD}`
                     }`

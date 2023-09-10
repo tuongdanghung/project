@@ -1,22 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IconButton } from "@material-tailwind/react";
-const Pagination = () => {
-    const [active, setActive] = React.useState(1);
+import { PaginationInterface } from "../../../../interface/client";
 
-    const getItemProps = (index: any) =>
-        ({
-            variant: active === index ? "filled" : "text",
-            color: "gray",
-            onClick: () => setActive(index),
-        } as any);
+const Pagination: React.FC<PaginationInterface> = (props) => {
+    const itemsPerPage = 6;
+    const [currentPage, setCurrentPage] = useState(1);
+    console.log();
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const currentPageData = props?.data?.slice(startIndex, endIndex);
+        props.handlePage(currentPageData);
+    }, [props.data, currentPage]);
+
+    useEffect(() => {
+        const initialData = props?.data?.slice(0, itemsPerPage);
+        props.handlePage(initialData);
+    }, [props.data]);
+
+    const totalPages = Math.ceil(props?.data?.length / itemsPerPage);
+
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+    };
+
+    const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
     return (
-        <div className="flex items-center gap-4 mt-5 justify-center">
+        <div>
             <div className="flex items-center gap-2">
-                <IconButton {...getItemProps(1)}>1</IconButton>
-                <IconButton {...getItemProps(2)}>2</IconButton>
-                <IconButton {...getItemProps(3)}>3</IconButton>
-                <IconButton {...getItemProps(4)}>4</IconButton>
-                <IconButton {...getItemProps(5)}>5</IconButton>
+                {pageNumbers.map((pageNumber) => (
+                    <IconButton
+                        key={pageNumber}
+                        variant={
+                            pageNumber === currentPage ? "outlined" : "text"
+                        }
+                        size="sm"
+                        onClick={() => handlePageChange(pageNumber)}
+                    >
+                        {pageNumber}
+                    </IconButton>
+                ))}
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { profileMenuItems, navigation } from "../../utils/nav";
 import { useNavigate } from "react-router-dom";
 
@@ -25,13 +25,23 @@ import { Link, NavLink } from "react-router-dom";
 import clsx from "clsx";
 import "./index.scss";
 import path from "../../utils/path";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../../../store";
+import { GetOneUser } from "../../../../store/actions";
+
 const ProfileMenu = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const token = localStorage.getItem("auth");
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const closeMenu = (path: any) => {
         navigate(path);
         setIsMenuOpen(false);
     };
+    useEffect(() => {
+        dispatch(GetOneUser(token));
+    }, []);
+
     return (
         <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
             <MenuHandler>
@@ -160,7 +170,8 @@ const Header = () => {
             () => window.innerWidth >= 960 && setIsNavOpen(false)
         );
     }, []);
-
+    const oneUser = useSelector((state: any) => state?.userReducer.oneUser);
+    console.log(oneUser?.cart?.length);
     return (
         <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:px-6">
             <div className="relative mx-auto flex justify-between items-center text-blue-gray-900">
@@ -183,7 +194,10 @@ const Header = () => {
                     <Bars2Icon className="h-6 w-6" />
                 </IconButton>
                 <div className="flex w-[100px] items-center cursor-pointer">
-                    <Link to={path.CART}>
+                    <Link to={path.CART} className="relative">
+                        <span className="text-red-500 font-bold absolute top-[-12px] right-0">
+                            {oneUser?.cart?.length}
+                        </span>
                         <ShoppingCartIcon className="h-7 w-7" />
                     </Link>
                     <ProfileMenu />

@@ -11,7 +11,7 @@ const path = {
     BLOG: "blog",
     FAQ: "faq",
     MYPROFILE: "profile",
-    INBOX: "contact",
+    HISTORY: "history-order",
     OUR_SERVICES: "OUR SERVICES",
     FINALREGISTER: "finalregister/:status",
     FORGOT: "reset-password/:token",

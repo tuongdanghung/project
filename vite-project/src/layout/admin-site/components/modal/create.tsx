@@ -53,7 +53,7 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
     const [title, setTitle] = useState<string>("");
     const [price, setPrice] = useState<number>(0);
     const [quantity, setQuantity] = useState<number>(0);
-    const [seller, setSeller] = useState<number>(0);
+    const [seller, setSeller] = useState<number>(1);
     const [description, setDescription] = useState<string>("");
     const [itemValueBrand, setItemValueBrand] = useState<any>("");
     const [itemValueCategory, setItemValueCategory] = useState<any>("");
@@ -91,11 +91,11 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
     useEffect(() => {
         setOpen(props.open);
         setSlug(props.slug);
-        dispatch(GetRam(token));
-        dispatch(GetCapacity(token));
-        dispatch(GetColor(token));
-        dispatch(GetBrand(token));
-        dispatch(GetCategory(token));
+        dispatch(GetRam(null));
+        dispatch(GetCapacity(null));
+        dispatch(GetColor(null));
+        dispatch(GetBrand(null));
+        dispatch(GetCategory(null));
         toBase64(watch);
     }, [props.open, props.slug]);
     const handleClose = () => {
@@ -152,6 +152,17 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                 ({ _id, ...rest }: { id: string; [key: string]: any }) => rest
             );
         setItemValueCapacity(result);
+    };
+    const setDefaultValue = () => {
+        setTitle("");
+        setPrice(0);
+        setQuantity(0);
+        setDescription("");
+        setImage([]);
+        setItemValueBrand([]);
+        setItemValueCapacity([]);
+        setItemValueColor([]);
+        setSeller(1);
     };
     const handleCreate = async () => {
         if (slug === "manager-product") {
@@ -247,7 +258,8 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                 const response = await apiCreateProduct(formData);
                 if (response.data.success) {
                     setIsSnipper(false);
-                    dispatch(GetAllProduct(token));
+                    setDefaultValue();
+                    dispatch(GetAllProduct(null));
                     toast.success("Create product successfully");
                 } else {
                     toast.error("Create product failed");
@@ -268,7 +280,8 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                 });
                 if (response.data.success) {
                     setIsSnipper(false);
-                    dispatch(GetBrand(token));
+                    dispatch(GetBrand(null));
+                    setValue("");
                     toast.success("Create brand successfully");
                 } else {
                     toast.error("Create brand failed");
@@ -288,8 +301,9 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                     title: value,
                 });
                 if (response.data.success) {
+                    setValue("");
                     setIsSnipper(false);
-                    dispatch(GetCategory(token));
+                    dispatch(GetCategory(null));
                     toast.success("Create category successfully");
                 } else {
                     toast.error("Create category failed");
@@ -310,7 +324,8 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                 });
                 if (response.data.success) {
                     setIsSnipper(false);
-                    dispatch(GetColor(token));
+                    setValue("");
+                    dispatch(GetColor(null));
                     toast.success("Create color successfully");
                 } else {
                     toast.error("Create color failed");
@@ -331,7 +346,8 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                 });
                 if (response.data.success) {
                     setIsSnipper(false);
-                    dispatch(GetRam(token));
+                    dispatch(GetRam(null));
+                    setValue("");
                     toast.success("Create ram successfully");
                 } else {
                     toast.error("Create ram failed");
@@ -353,7 +369,8 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                 });
                 if (response.data.success) {
                     setIsSnipper(false);
-                    dispatch(GetCapacity(token));
+                    setValue("");
+                    dispatch(GetCapacity(null));
                     toast.success("Create ram successfully");
                 } else {
                     toast.error("Create ram failed");

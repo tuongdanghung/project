@@ -21,7 +21,7 @@ const Nav = () => {
     return (
         <div className="p-4 bg-gray-900 text-white h-screen">
             <div className="flex flex-col items-center py-4 justify-center">
-                <Link to={path.HOME}>
+                <Link to={"/"}>
                     <img
                         width="25%"
                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"

@@ -68,7 +68,7 @@ const DialogComponent: React.FC<ModalCreate> = (props) => {
                     token,
                 });
                 if (response.data.success) {
-                    dispatch(GetBrand(token));
+                    dispatch(GetBrand(null));
                     toast.success("Update brand successfully");
                 } else {
                     toast.error("Update brand failed");
@@ -84,7 +84,7 @@ const DialogComponent: React.FC<ModalCreate> = (props) => {
                     token,
                 });
                 if (response.data.success) {
-                    dispatch(GetCategory(token));
+                    dispatch(GetCategory(null));
                     toast.success("Update category successfully");
                 } else {
                     toast.error("Update category failed");
@@ -100,7 +100,7 @@ const DialogComponent: React.FC<ModalCreate> = (props) => {
                     token,
                 });
                 if (response.data.success) {
-                    dispatch(GetColor(token));
+                    dispatch(GetColor(null));
                     toast.success("Update color successfully");
                 } else {
                     toast.error("Update color failed");
@@ -116,7 +116,7 @@ const DialogComponent: React.FC<ModalCreate> = (props) => {
                     token,
                 });
                 if (response.data.success) {
-                    dispatch(GetRam(token));
+                    dispatch(GetRam(null));
                     toast.success("Update ram successfully");
                 } else {
                     toast.error("Update ram failed");
@@ -132,7 +132,7 @@ const DialogComponent: React.FC<ModalCreate> = (props) => {
                     token,
                 });
                 if (response.data.success) {
-                    dispatch(GetCapacity(token));
+                    dispatch(GetCapacity(null));
                     toast.success("Update ram successfully");
                 } else {
                     toast.error("Update ram failed");

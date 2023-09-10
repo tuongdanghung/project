@@ -20,17 +20,18 @@ const TABLE_HEAD = ["Title", ""];
 const ManagerBrand = () => {
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
+    const [data, setData] = useState<any>([]);
     const token = localStorage.getItem("auth");
     const brand = useSelector((state: any) => state?.productReducer.brand);
     const [id, setId] = useState<string>("");
     useEffect(() => {
-        dispatch(GetBrand(token));
+        dispatch(GetBrand(null));
     }, []);
     const handleDelete = async (id: string) => {
         const payload = { id, token: token };
         const response = await apiDeleteBrand(payload);
         if (response.data.success) {
-            dispatch(GetBrand(token));
+            dispatch(GetBrand(null));
             toast.success("Delete brand successfully");
         } else {
             toast.error("Delete brand failed");
@@ -42,6 +43,9 @@ const ManagerBrand = () => {
     };
     const handleClose = (close: boolean) => {
         setOpen(close);
+    };
+    const handlePage = (pagination: any) => {
+        setData(pagination);
     };
     return (
         <Card className="h-full w-full">
@@ -69,7 +73,7 @@ const ManagerBrand = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {brand?.map((item: any, index: any) => {
+                        {data?.map((item: any, index: any) => {
                             const isLast = index === item.length - 1;
                             const classes = isLast
                                 ? "p-4"
@@ -116,7 +120,7 @@ const ManagerBrand = () => {
                 </table>
             </CardBody>
             <CardFooter className="flex items-center border-t border-blue-gray-50 p-4 justify-center">
-                <Pagination />
+                <Pagination data={brand} handlePage={handlePage} />
             </CardFooter>
             <DialogComponent
                 id={id}
@@ -124,7 +128,6 @@ const ManagerBrand = () => {
                 slug={"manager-brand"}
                 title={"Edit brand"}
                 handleClose={handleClose}
-                // handleOpen={handleOpen}
             />
             <ToastContainer />
         </Card>

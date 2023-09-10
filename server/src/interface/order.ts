@@ -1,16 +1,14 @@
-import mongoose from "mongoose";
-// export interface CartItem {
-//     product: mongoose.Types.ObjectId;
-//     quantity: number;
-//     color: string;
-//     price: number;
-//     title: string;
-// }
-
+export interface Address {
+    city: string;
+    district: string;
+    wards: string;
+}
 export interface Order {
     payment: number;
     total: number;
     orderBy: any;
     status: string;
-    product: any
+    product: any;
+    address: Address[];
+    shipping: number;
 }

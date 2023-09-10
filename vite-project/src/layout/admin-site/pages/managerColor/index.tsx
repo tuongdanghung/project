@@ -20,18 +20,19 @@ const TABLE_HEAD = ["Title", ""];
 
 const ManagerColor: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
+    const [data, setData] = useState<any>([]);
     const dispatch = useDispatch<AppDispatch>();
     const token = localStorage.getItem("auth");
     const color = useSelector((state: any) => state?.productReducer.color);
     const [id, setId] = useState<string>("");
     useEffect(() => {
-        dispatch(GetColor(token));
+        dispatch(GetColor(null));
     }, []);
     const handleDelete = async (id: string) => {
         const payload = { id, token: token };
         const response = await apiDeleteColor(payload);
         if (response.data.success) {
-            dispatch(GetColor(token));
+            dispatch(GetColor(null));
             toast.success("Delete color successfully");
         } else {
             toast.error("Delete color failed");
@@ -43,6 +44,9 @@ const ManagerColor: React.FC = () => {
     };
     const handleClose = (close: boolean) => {
         setOpen(close);
+    };
+    const handlePage = (pagination: any) => {
+        setData(pagination);
     };
     return (
         <Card className="h-full w-full">
@@ -70,7 +74,7 @@ const ManagerColor: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {color?.map((item: any, index: any) => {
+                        {data?.map((item: any, index: any) => {
                             const isLast = index === item.length - 1;
                             const classes = isLast
                                 ? "p-4"
@@ -116,7 +120,7 @@ const ManagerColor: React.FC = () => {
                 </table>
             </CardBody>
             <CardFooter className="flex items-center border-t border-blue-gray-50 p-4 justify-center">
-                <Pagination />
+                <Pagination data={color} handlePage={handlePage} />
             </CardFooter>
             <DialogComponent
                 id={id}
