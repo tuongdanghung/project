@@ -17,4 +17,5 @@ export interface CheckValidInterface {
     seller?: boolean;
     quantity?: boolean;
     valueAddNewBrand?: boolean;
+    blog?: boolean;
 }

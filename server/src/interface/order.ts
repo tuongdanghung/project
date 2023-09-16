@@ -11,4 +11,6 @@ export interface Order {
     product: any;
     address: Address[];
     shipping: number;
+    mobile: Number;
+    fullName: String;
 }

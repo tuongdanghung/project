@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Tabs,
     TabsHeader,
@@ -12,44 +12,17 @@ import Seller from "./Seller";
 import NewArrivals from "./NewArrivals";
 import FeaturedProducts from "./FeaturedProducts";
 interface Product {
-    id: number;
-    title: string;
-    price: number;
-    image: string;
+    id?: number;
+    title?: string;
+    price?: number;
+    image?: string;
+    data?: any;
 }
-const Panel = () => {
-    const product: Product[] = [
-        {
-            id: 0,
-            title: "iphone 11",
-            price: 100,
-            image: "https://images.unsplash.com/photo-1512054502232-10a0a035d672?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
-        },
-        {
-            id: 1,
-            title: "iphone 12",
-            price: 100,
-            image: "https://images.unsplash.com/photo-1512054502232-10a0a035d672?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
-        },
-        {
-            id: 2,
-            title: "iphone 13",
-            price: 100,
-            image: "https://images.unsplash.com/photo-1512054502232-10a0a035d672?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
-        },
-        {
-            id: 3,
-            title: "iphone 14",
-            price: 100,
-            image: "https://images.unsplash.com/photo-1512054502232-10a0a035d672?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
-        },
-        {
-            id: 4,
-            title: "iphone 15",
-            price: 100,
-            image: "https://images.unsplash.com/photo-1512054502232-10a0a035d672?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80",
-        },
-    ];
+const Panel: React.FC<Product> = (props) => {
+    const [product, setProduct] = useState([]);
+    useEffect(() => {
+        setProduct(props.data);
+    }, [props]);
     const data = [
         {
             label: "BEST SELLER",
@@ -76,8 +49,8 @@ const Panel = () => {
             className="mt-6 border border-collapse p-6 rounded-md "
         >
             <TabsHeader>
-                {data.map(({ label, value, icon }) => (
-                    <Tab key={value} value={value}>
+                {data.map(({ label, value, icon }, index) => (
+                    <Tab key={index} value={value}>
                         <div className="flex items-center gap-2">
                             {React.createElement(icon, {
                                 className: "w-5 h-5",
@@ -88,8 +61,8 @@ const Panel = () => {
                 ))}
             </TabsHeader>
             <TabsBody>
-                {data.map(({ value, desc }) => (
-                    <TabPanel key={value} value={value} className="p-0">
+                {data.map(({ value, desc }, index) => (
+                    <TabPanel key={index} value={value} className="p-0">
                         {desc}
                     </TabPanel>
                 ))}

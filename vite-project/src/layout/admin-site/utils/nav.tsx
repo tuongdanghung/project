@@ -89,15 +89,8 @@ export const adminNavigation: MenuItem[] = [
     {
         id: 5,
         icon: <AiOutlineComment />,
-        value: "Manage Comment",
+        value: "Manage Blog",
         type: "single",
-        path: `${pathAdmin.MANAGER_COMMENT}`,
-    },
-    {
-        id: 6,
-        icon: <AiOutlineComment />,
-        value: "Manage Comment",
-        type: "single",
-        path: `${pathAdmin.MANAGER_EXAMPLE}`,
+        path: `${pathAdmin.MANAGER_BLOG}`,
     },
 ];

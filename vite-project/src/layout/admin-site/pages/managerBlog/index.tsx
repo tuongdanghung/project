@@ -9,35 +9,32 @@ import {
 } from "@material-tailwind/react";
 import Pagination from "../../components/pagination";
 import Head from "../../components/layout/Head";
-import { GetCategory } from "../../../../store/actions";
+import { GetAllBlog } from "../../../../store/actions";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../../store";
-import { apiDeleteCategory } from "../../../../apis";
+import { apiDeleteBlog } from "../../../../apis";
 import DialogComponent from "../../components/modal/modalUpdate";
 import { ToastContainer, toast } from "react-toastify";
-const TABLE_HEAD = ["Title", ""];
-
-const ManagerCategory: React.FC = () => {
+const TABLE_HEAD = ["Title", "Description", ""];
+const ManagerBlog = () => {
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
     const [data, setData] = useState<any>([]);
     const token = localStorage.getItem("auth");
-    const category = useSelector(
-        (state: any) => state?.productReducer.category
-    );
+    const blog = useSelector((state: any) => state?.blogReducer.blogs);
     const [id, setId] = useState<string>("");
     useEffect(() => {
-        dispatch(GetCategory(null));
+        dispatch(GetAllBlog(null));
     }, []);
     const handleDelete = async (id: string) => {
         const payload = { id, token: token };
-        const response = await apiDeleteCategory(payload);
+        const response = await apiDeleteBlog(payload);
         if (response.data.success) {
-            dispatch(GetCategory(null));
-            toast.success("Delete category successfully");
+            dispatch(GetAllBlog(null));
+            toast.success("Delete blog successfully");
         } else {
-            toast.error("Delete category failed");
+            toast.error("Delete blog failed");
         }
     };
     const handleOpen = (id: string) => {
@@ -47,14 +44,13 @@ const ManagerCategory: React.FC = () => {
     const handleClose = (close: boolean) => {
         setOpen(close);
     };
-
     const handlePage = (pagination: any) => {
         setData(pagination);
     };
     return (
         <Card className="h-full w-full">
             <CardHeader floated={false} shadow={false} className="rounded-none">
-                <Head title={"Manager Category"} slug={"manager-category"} />
+                <Head title={"Manager Blog"} slug={"manager-blog"} />
             </CardHeader>
             <CardBody className="px-0">
                 <table className="w-full min-w-max table-auto text-center">
@@ -82,6 +78,7 @@ const ManagerCategory: React.FC = () => {
                             const classes = isLast
                                 ? "p-4"
                                 : "p-4 border-b border-blue-gray-50";
+
                             return (
                                 <tr key={item._id}>
                                     <td className={classes}>
@@ -92,6 +89,17 @@ const ManagerCategory: React.FC = () => {
                                                 className="font-bold"
                                             >
                                                 {item.title}
+                                            </Typography>
+                                        </div>
+                                    </td>
+                                    <td className={`${classes} w-[1000px]`}>
+                                        <div className="flex items-center gap-3 justify-center">
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-bold"
+                                            >
+                                                {item.description}
                                             </Typography>
                                         </div>
                                     </td>
@@ -123,13 +131,13 @@ const ManagerCategory: React.FC = () => {
                 </table>
             </CardBody>
             <CardFooter className="flex items-center border-t border-blue-gray-50 p-4 justify-center">
-                <Pagination data={category} handlePage={handlePage} />
+                <Pagination data={blog} handlePage={handlePage} />
             </CardFooter>
             <DialogComponent
                 id={id}
                 open={open}
-                slug={"manager-category"}
-                title={"Edit Category"}
+                slug={"manager-blog"}
+                title={"Edit blog"}
                 handleClose={handleClose}
             />
             <ToastContainer />
@@ -137,4 +145,4 @@ const ManagerCategory: React.FC = () => {
     );
 };
 
-export default ManagerCategory;
+export default ManagerBlog;

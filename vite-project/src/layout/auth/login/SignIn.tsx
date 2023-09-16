@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Button } from "@material-tailwind/react";
-import { InputField, Required } from "../../components";
-import { apiLogin } from "../../../../apis";
+import { InputField, Required } from "../../customer-site/components";
+import { apiLogin } from "../../../apis";
 import { useNavigate } from "react-router-dom";
-import path from "../../utils/path";
-import pathAdmin from "../../../admin-site/utils/path";
+import path from "../../customer-site/utils/path";
+import pathAdmin from "../../admin-site/utils/path";
 import Swal from "sweetalert2";
 import {
     SignInInterface,
     CheckValidInterface,
-} from "../../../../interface/client/login";
+} from "../../../interface/client/login";
 
 const Signin = () => {
     const [payload, setPayload] = useState<SignInInterface>({

@@ -18,7 +18,6 @@ const Cart = () => {
     const [isCheck, setIsCheck] = useState(false);
     const token = localStorage.getItem("auth");
     const cart = useSelector((state: any) => state?.userReducer?.oneUser?.cart);
-    console.log(cart);
     const data = quantity !== 0 ? quantity : cart;
     useEffect(() => {
         dispatch(GetOneUser(token));

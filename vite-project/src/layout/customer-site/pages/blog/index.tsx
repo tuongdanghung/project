@@ -6,28 +6,23 @@ import {
     CardFooter,
     Typography,
 } from "@material-tailwind/react";
-import { GetAllProduct } from "../../../../store/actions";
+import { GetAllBlog } from "../../../../store/actions";
 import Pagination from "../../components/pagination";
 import path from "../../utils/path";
 import { AppDispatch } from "../../../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-const Product = () => {
-    const params = useParams();
-    console.log(params);
+const BLog = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [newData, setNewData] = useState([]);
-    const data = useSelector((state: any) => state?.productReducer?.products);
-    const [products, setProducts] = useState([]);
+    const data = useSelector((state: any) => state?.blogReducer?.blogs);
+    const [blog, setBlogs] = useState([]);
     useEffect(() => {
-        dispatch(GetAllProduct(null));
+        dispatch(GetAllBlog(null));
     }, []);
-
     useEffect(() => {
-        setProducts(
-            data?.filter((product: any) => product.category === params.slug)
-        );
-    }, [data, params]);
+        setBlogs(data);
+    }, [data]);
 
     const handlePage = (dataPagination: any) => {
         setNewData(dataPagination);
@@ -49,7 +44,7 @@ const Product = () => {
                                         color="blue-gray"
                                         className="mb-2"
                                     >
-                                        <img src={item.image[0].image} alt="" />
+                                        {/* <img src={item.image[0].image} alt="" /> */}
                                     </Typography>
                                     <Typography className="m-auto">
                                         <span className="text-2xl font-bold">
@@ -62,7 +57,7 @@ const Product = () => {
                                 <CardFooter className="pt-0">
                                     <Link
                                         className="border border-separate py-2 px-4 rounded-lg hover:text-white hover:bg-blue-gray-900"
-                                        to={`/${path.PRODUCTS}/${params.slug}/${item._id}`}
+                                        to={`/${path.BLOG}/${item._id}`}
                                     >
                                         Read More
                                     </Link>
@@ -72,11 +67,11 @@ const Product = () => {
                     })}
                 </div>
                 <div className="mt-5 flex items-center">
-                    <Pagination handlePage={handlePage} data={products} />
+                    <Pagination handlePage={handlePage} data={blog} />
                 </div>
             </div>
         </div>
     );
 };
 
-export default Product;
+export default BLog;

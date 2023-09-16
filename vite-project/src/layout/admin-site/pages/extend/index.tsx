@@ -4,7 +4,9 @@ import { Nav } from "../../components";
 import { AppDispatch } from "../../../../store";
 import { GetOneUser } from "../../../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const ExtendAdmin: React.FC = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const token = localStorage.getItem("auth");
     const user = useSelector((state: any) => state?.userReducer?.oneUser);
@@ -22,7 +24,9 @@ const ExtendAdmin: React.FC = () => {
                         <Outlet />
                     </div>
                 </div>
-            ) : null}
+            ) : (
+                navigate("/")
+            )}
         </>
     );
 };

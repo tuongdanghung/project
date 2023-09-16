@@ -13,6 +13,8 @@ const orderSchema = new mongoose.Schema<Order>({
         default: "Pending",
         enum: ["Cancel", "Pending", "Processing", "Delivering", "Done"],
     },
+    mobile: { type: Number },
+    fullName: { type: String },
     orderBy: { type: mongoose.Types.ObjectId, ref: "User" },
     product: [
         {

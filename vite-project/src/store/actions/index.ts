@@ -122,3 +122,24 @@ export const GetOneOrder = createAsyncThunk<any, any, type.ProductType>(
         return response.data.data;
     }
 );
+
+export const GetAllBlog = createAsyncThunk<any, any, type.ProductType>(
+    "allBlog",
+    async (token: string, { rejectWithValue }) => {
+        const response = await apis.apiGetAllBlog(token);
+        if (!(response as any).data.success) {
+            return rejectWithValue("Error fetching data");
+        }
+        return response.data.data;
+    }
+);
+export const GetOneBlog = createAsyncThunk<any, any, type.ProductType>(
+    "oneBlog",
+    async (data: string, { rejectWithValue }) => {
+        const response = await apis.apiGetOneBlog(data);
+        if (!(response as any).data.success) {
+            return rejectWithValue("Error fetching data");
+        }
+        return response.data.data;
+    }
+);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { GetCapacity } from "../../../../../store/actions";
+import { GetAllBlog } from "../../../../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../../../store";
 type Props = {
@@ -7,27 +7,22 @@ type Props = {
     handleChange: (title: string) => void;
 };
 
-const Capacity: React.FC<Props> = (props) => {
+const Blog: React.FC<Props> = (props) => {
     const [id, setId] = useState<string>(props.id);
     const dispatch = useDispatch<AppDispatch>();
     const [title, setTitle] = useState<any>({
-        title: 0,
-        percent: 0,
+        title: "",
+        description: "",
     });
-
-    const capacity = useSelector(
-        (state: any) => state?.productReducer.capacity
-    );
+    const blog = useSelector((state: any) => state?.blogReducer.blogs);
     useEffect(() => {
-        dispatch(GetCapacity(null));
+        dispatch(GetAllBlog(null));
         setId(props.id);
-        setTitle(capacity.find((item: any) => item._id === id));
+        setTitle(blog.find((item: any) => item._id === id));
     }, [props.id]);
-
     useEffect(() => {
         props.handleChange(title);
     }, [title]);
-
     const handleChange = (name: any, value: any) => {
         setTitle((prevData: any) => ({
             ...prevData,
@@ -40,21 +35,22 @@ const Capacity: React.FC<Props> = (props) => {
                 <label className="block">Title</label>
                 <input
                     className="border border-collapse rounded-lg w-full"
-                    type="number"
-                    value={title.size}
-                    onChange={(e) => handleChange("size", e.target.value)}
+                    type="text"
+                    value={title.title}
+                    onChange={(e) => handleChange("title", e.target.value)}
                 />
             </div>
             <div>
-                <label className="block">Percent</label>
-                <input
-                    className="border border-collapse rounded-lg w-full"
-                    type="number"
-                    value={title.percent}
-                    onChange={(e) => handleChange("percent", e.target.value)}
+                <label className="block">Title</label>
+                <textarea
+                    className="border border-collapse rounded-lg w-full h-[500px]"
+                    value={title.description}
+                    onChange={(e) =>
+                        handleChange("description", e.target.value)
+                    }
                 />
             </div>
         </div>
     );
 };
-export default Capacity;
+export default Blog;

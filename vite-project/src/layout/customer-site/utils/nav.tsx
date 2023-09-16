@@ -44,12 +44,8 @@ export const profileMenuItems = [
         icon: InboxArrowDownIcon,
     },
     {
-        label: "Help",
-        path: `${path.HISTORY}`,
-        icon: LifebuoyIcon,
-    },
-    {
         label: "Sign Out",
+        path: `/${path.LOGIN}`,
         icon: PowerIcon,
     },
 ];

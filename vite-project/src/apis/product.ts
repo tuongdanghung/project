@@ -20,14 +20,14 @@ export const apiProductDetail = (detail: any) =>
     axios({
         url: `/product/${detail.id}`,
         method: "GET",
-        headers: { Authorization: `Bearer ${detail.token}` },
+        headers: { Authorization: `Bearer ${token}` },
     });
 
 export const apiDeleteProduct = (data: any) =>
     axios({
         url: `/product/${data.id}`,
         method: "DELETE",
-        headers: { Authorization: `Bearer ${data.token}` },
+        headers: { Authorization: `Bearer ${token}` },
     });
 
 export const apiEditProduct = (data: any, id: any) =>
@@ -60,14 +60,14 @@ export const apiEditRam = (data: any) =>
         url: `/ram/${data.id}`,
         data: data,
         method: "PUT",
-        headers: { Authorization: `Bearer ${data.token}` },
+        headers: { Authorization: `Bearer ${token}` },
     });
 
 export const apiDeleteRam = (data: any) =>
     axios({
         url: `/ram/${data.id}`,
         method: "DELETE",
-        headers: { Authorization: `Bearer ${data.token}` },
+        headers: { Authorization: `Bearer ${token}` },
     });
 // ram
 export const apiCreateCapacity = (data: any) =>
@@ -90,13 +90,13 @@ export const apiEditCapacity = (data: any) =>
         url: `/capacity/${data.id}`,
         data: data,
         method: "PUT",
-        headers: { Authorization: `Bearer ${data.token}` },
+        headers: { Authorization: `Bearer ${token}` },
     });
 export const apiDeleteCapacity = (data: any) =>
     axios({
         url: `/capacity/${data.id}`,
         method: "DELETE",
-        headers: { Authorization: `Bearer ${data.token}` },
+        headers: { Authorization: `Bearer ${token}` },
     });
 // capacity
 export const apiCreateColor = (data: any) =>
@@ -119,7 +119,7 @@ export const apiDeleteColor = (data: any) =>
     axios({
         url: `/color/${data.id}`,
         method: "DELETE",
-        headers: { Authorization: `Bearer ${data.token}` },
+        headers: { Authorization: `Bearer ${token}` },
     });
 
 export const apiEditColor = (data: any) =>
@@ -127,6 +127,6 @@ export const apiEditColor = (data: any) =>
         url: `/color/${data.id}`,
         data: data,
         method: "PUT",
-        headers: { Authorization: `Bearer ${data.token}` },
+        headers: { Authorization: `Bearer ${token}` },
     });
 // color

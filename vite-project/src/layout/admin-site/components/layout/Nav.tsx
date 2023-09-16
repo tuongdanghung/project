@@ -3,7 +3,6 @@ import { adminNavigation } from "../../utils/nav";
 import clsx from "clsx";
 import { Link, NavLink } from "react-router-dom";
 import { AiOutlineCaretDown } from "react-icons/ai";
-import path from "../../../customer-site/utils/path";
 const activeStyle =
     "px-4 py-2 flex items-center gap-2 bg-gray-500 text-gray-200 rounded rounded-lg";
 const notActiveStyle =
@@ -23,6 +22,7 @@ const Nav = () => {
             <div className="flex flex-col items-center py-4 justify-center">
                 <Link to={"/"}>
                     <img
+                        className="m-auto"
                         width="25%"
                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                         alt=""

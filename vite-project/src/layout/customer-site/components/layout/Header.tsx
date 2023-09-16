@@ -36,6 +36,9 @@ const ProfileMenu = () => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const closeMenu = (path: any) => {
         navigate(path);
+        if (path === "/login") {
+            localStorage.removeItem("auth");
+        }
         setIsMenuOpen(false);
     };
     useEffect(() => {
@@ -171,7 +174,6 @@ const Header = () => {
         );
     }, []);
     const oneUser = useSelector((state: any) => state?.userReducer.oneUser);
-    console.log(oneUser?.cart?.length);
     return (
         <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:px-6">
             <div className="relative mx-auto flex justify-between items-center text-blue-gray-900">

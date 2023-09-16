@@ -1,44 +1,58 @@
-import React from "react";
-
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GetOneUser } from "../../../../store/actions";
+import { AppDispatch } from "../../../../store";
+import { Button, Input } from "@material-tailwind/react";
+import { apiUpdateUser } from "../../../../apis";
+import { ToastContainer, toast } from "react-toastify";
 const Profile = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const oneUser = useSelector((state: any) => state?.userReducer.oneUser);
+
+    const [userData, setUserData] = useState({
+        firstName: "",
+        lastName: "",
+        mobile: "",
+        email: "",
+    });
+    const token = localStorage.getItem("auth");
+    const [isCheck, setIsCheck] = useState(true);
+    useEffect(() => {
+        dispatch(GetOneUser(token));
+    }, []);
+    useEffect(() => {
+        setUserData({
+            firstName: oneUser?.firstName,
+            lastName: oneUser?.lastName,
+            mobile: oneUser?.mobile,
+            email: oneUser?.email,
+        });
+    }, [oneUser]);
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+
+        // Cập nhật giá trị của state tương ứng với input được thay đổi
+        setUserData((prevUserData) => ({
+            ...prevUserData,
+            [name]: value,
+        }));
+    };
+    const handleUpdate = async () => {
+        const response = await apiUpdateUser(userData);
+        if (response.status === 200) {
+            toast.success("User updated successfully");
+            dispatch(GetOneUser(token));
+            setIsCheck(false);
+        } else {
+            toast.success("User updated failed");
+        }
+    };
     return (
         <div className="p-4 border border-collapse rounded-md m-0">
+            <ToastContainer />
             <div className="md:flex no-wrap md:-mx-2 ">
-                {/* Left Side */}
-                <div className="w-full md:w-3/12 md:mx-2">
-                    {/* Profile Card */}
-                    <div className="bg-white border border-collapse rounded-md p-3">
-                        <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
-                            Jane Doe
-                        </h1>
-                        <h3 className="text-gray-600 font-lg text-semibold leading-6">
-                            Owner at Her Company Inc.
-                        </h3>
-                        <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Reprehenderit, eligendi dolorum sequi illum
-                            qui unde aspernatur non deserunt
-                        </p>
-                        <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
-                            <li className="flex items-center py-3">
-                                <span>Status</span>
-                                <span className="ml-auto">
-                                    <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">
-                                        Active
-                                    </span>
-                                </span>
-                            </li>
-                            <li className="flex items-center py-3">
-                                <span>Member since</span>
-                                <span className="ml-auto">Nov 07, 2016</span>
-                            </li>
-                        </ul>
-                    </div>
-                    {/* End of profile card */}
-                    <div className="my-4" />
-                </div>
                 {/* Right Side */}
-                <div className="w-full md:w-9/12 mx-2 h-64">
+                <div className="w-full mx-2 h-full">
                     <div className="bg-white p-3 shadow-sm border border-collapse rounded-md">
                         <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                             <span className="tracking-wide">About</span>
@@ -49,36 +63,24 @@ const Profile = () => {
                                     <div className="px-4 py-2 font-semibold">
                                         First Name
                                     </div>
-                                    <div className="px-4 py-2">Jane</div>
+                                    <div className="px-4 py-2">
+                                        {oneUser?.firstName}
+                                    </div>
                                 </div>
                                 <div className="grid grid-cols-2">
                                     <div className="px-4 py-2 font-semibold">
                                         Last Name
                                     </div>
-                                    <div className="px-4 py-2">Doe</div>
+                                    <div className="px-4 py-2">
+                                        {oneUser?.lastName}
+                                    </div>
                                 </div>
                                 <div className="grid grid-cols-2">
                                     <div className="px-4 py-2 font-semibold">
                                         Contact No.
                                     </div>
                                     <div className="px-4 py-2">
-                                        +11 998001001
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-2">
-                                    <div className="px-4 py-2 font-semibold">
-                                        Current Address
-                                    </div>
-                                    <div className="px-4 py-2">
-                                        Beech Creek, PA, Pennsylvania
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-2">
-                                    <div className="px-4 py-2 font-semibold">
-                                        Permanant Address
-                                    </div>
-                                    <div className="px-4 py-2">
-                                        Arlington Heights, IL, Illinois
+                                        {oneUser?.mobile}
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-2">
@@ -86,19 +88,70 @@ const Profile = () => {
                                         Email.
                                     </div>
                                     <div className="px-4 py-2">
-                                        <a
-                                            className="text-blue-800"
-                                            href="mailto:jane@example.com"
-                                        >
-                                            jane@example.com
-                                        </a>
+                                        {oneUser?.email}
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <Button onClick={() => setIsCheck(!isCheck)}>
+                            Edit
+                        </Button>
                     </div>
                 </div>
             </div>
+            {isCheck !== true ? (
+                <div className=" border border-collapse rounded-md mt-6 p-5">
+                    <div className="grid grid-cols-4 gap-5">
+                        <div>
+                            <label>First Name</label>
+                            <Input
+                                type="text"
+                                value={userData?.firstName}
+                                name="firstName"
+                                className="w-full"
+                                crossOrigin={undefined}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Last Name</label>
+                            <Input
+                                type="text"
+                                value={userData?.lastName}
+                                name="lastName"
+                                className="w-full"
+                                crossOrigin={undefined}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Contact No.</label>
+                            <Input
+                                type="text"
+                                value={userData?.mobile}
+                                name="mobile"
+                                className="w-full"
+                                crossOrigin={undefined}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <Input
+                                type="text"
+                                disabled
+                                name="email"
+                                value={userData?.email}
+                                className="w-full"
+                                crossOrigin={undefined}
+                            />
+                        </div>
+                    </div>
+                    <Button onClick={handleUpdate} className="mt-4">
+                        Update
+                    </Button>
+                </div>
+            ) : null}
         </div>
     );
 };

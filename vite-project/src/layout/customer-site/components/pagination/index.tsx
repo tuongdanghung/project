@@ -3,9 +3,8 @@ import { IconButton } from "@material-tailwind/react";
 import { PaginationInterface } from "../../../../interface/client";
 
 const Pagination: React.FC<PaginationInterface> = (props) => {
-    const itemsPerPage = 6;
+    const itemsPerPage = 3;
     const [currentPage, setCurrentPage] = useState(1);
-    console.log();
     useEffect(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;

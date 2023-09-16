@@ -9,6 +9,9 @@ import {
     ProductDetail,
     Profile,
     HistoryOrder,
+    Blog,
+    BlogDetail,
+    Forgot,
 } from "./layout/customer-site/pages";
 import {
     ExtendAdmin,
@@ -17,39 +20,15 @@ import {
     ManagerProduct,
     ManagerOrder,
     ManagerBrand,
-    Context,
-    ManagerComment,
     ManagerCategory,
     ManagerRam,
     ManagerColor,
     ManagerCapacity,
+    ManagerBlog,
 } from "./layout/admin-site/pages";
 import path from "./layout/customer-site/utils/path";
 import pathAdmin from "./layout/admin-site/utils/path";
 import "react-toastify/dist/ReactToastify.css";
-// import Notifications from "react-push-notification";
-// function App() {
-//   const handleClick = () => {
-//     console.log("xxxxx");
-//     Notifications({
-//       title: "ngol",
-//       message: "xxxxx",
-//       duration: 4000,
-//       native: true,
-//       onClick: () => (window.location.href = "https://www.youtube.com/"),
-//     });
-//   };
-//   return (
-//     <div className="app">
-//       {/* <Notifications /> */}
-//       <div className="row">
-//         <button className="border-2 border-sky-500" onClick={handleClick}>
-//           Hello world.
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
 
 function App() {
     return (
@@ -67,6 +46,10 @@ function App() {
                             path={path.PRODUCT_DETAIL}
                             element={<ProductDetail />}
                         ></Route>
+                        <Route
+                            path={path.BLOG_DETAIL}
+                            element={<BlogDetail />}
+                        ></Route>
                         <Route path={path.CART} element={<Cart />}></Route>
                         <Route
                             path={path.CHECKOUT}
@@ -81,9 +64,8 @@ function App() {
                             element={<HistoryOrder />}
                         ></Route>
 
-                        {/* 
-            <Route path={path.BLOG} element={<Blog />}></Route>
-             */}
+                        <Route path={path.BLOG} element={<Blog />}></Route>
+
                         <Route path={path.ALL} element={<Home />}></Route>
                     </Route>
                     <Route path={pathAdmin.ADMIN} element={<ExtendAdmin />}>
@@ -124,18 +106,14 @@ function App() {
                             element={<ManagerCapacity />}
                         ></Route>
                         <Route
-                            path={pathAdmin.MANAGER_COMMENT}
-                            element={<ManagerComment />}
-                        ></Route>
-                        <Route
-                            path={pathAdmin.MANAGER_EXAMPLE}
-                            element={<Context />}
+                            path={pathAdmin.MANAGER_BLOG}
+                            element={<ManagerBlog />}
                         ></Route>
                     </Route>
                     <Route path={path.LOGIN} element={<Login />}></Route>
-                    {/*
-          <Route path={path.FORGOT} element={<Forgot />}></Route>
-        <Route path={path.FINALREGISTER} element={<FinalRegister />}></Route> */}
+
+                    <Route path={path.FORGOT} element={<Forgot />}></Route>
+                    {/* <Route path={path.FINALREGISTER} element={<FinalRegister />}></Route> */}
                 </Routes>
             </div>
         </div>

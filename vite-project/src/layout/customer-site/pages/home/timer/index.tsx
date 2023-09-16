@@ -6,7 +6,7 @@ import {
     Typography,
     Button,
 } from "@material-tailwind/react";
-const CountdownTimer: React.FC = () => {
+const CountdownTimer = (props: any) => {
     const initialTargetTime = new Date().getTime() + 3600000; // 1 hour in milliseconds
     const targetTimeStored = localStorage.getItem("targetTime");
     const [targetTime, setTargetTime] = useState<number>(
@@ -15,7 +15,6 @@ const CountdownTimer: React.FC = () => {
     const [remainingTime, setRemainingTime] = useState<number>(
         targetTime - new Date().getTime()
     );
-
     useEffect(() => {
         localStorage.setItem("targetTime", targetTime.toString());
 
@@ -33,11 +32,9 @@ const CountdownTimer: React.FC = () => {
 
         return () => clearInterval(interval);
     }, [targetTime, initialTargetTime]);
-
     const hours = Math.floor(remainingTime / 3600000);
     const minutes = Math.floor((remainingTime % 3600000) / 60000);
     const seconds = Math.floor((remainingTime % 60000) / 1000);
-
     return (
         <div className="mt-6 customer-care p-6 bg-white border border-collapse rounded-md">
             <div className="flex">
@@ -70,90 +67,6 @@ const CountdownTimer: React.FC = () => {
                                 }
                                 alt=""
                             />
-                            <span className="px-2 py-1 text-xs rounded absolute top-0 text-red-600 bg-red-300">
-                                30%
-                            </span>
-                        </Typography>
-                        <Typography className="m-auto">
-                            <span className="text-2xl font-bold">xxxxx</span>{" "}
-                            <br />
-                            <span>Price: 123$</span>
-                        </Typography>
-                    </CardBody>
-                    <CardFooter className="pt-0">
-                        <Button>Read More</Button>
-                    </CardFooter>
-                </Card>
-                <Card className="mt-6 border border-collapse">
-                    <CardBody>
-                        <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            className="mb-2 relative"
-                        >
-                            <img
-                                src={
-                                    "https://salt.tikicdn.com/cache/280x280/ts/product/ca/0d/b0/e183f5f1d1e66d8c402b50b476e4a486.jpg.webp"
-                                }
-                                alt=""
-                            />
-                            <span className="px-2 py-1 text-xs rounded absolute top-0 text-red-600 bg-red-300">
-                                30%
-                            </span>
-                        </Typography>
-                        <Typography className="m-auto">
-                            <span className="text-2xl font-bold">xxxxx</span>{" "}
-                            <br />
-                            <span>Price: 123$</span>
-                        </Typography>
-                    </CardBody>
-                    <CardFooter className="pt-0">
-                        <Button>Read More</Button>
-                    </CardFooter>
-                </Card>
-                <Card className="mt-6 border border-collapse">
-                    <CardBody>
-                        <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            className="mb-2 relative"
-                        >
-                            <img
-                                src={
-                                    "https://salt.tikicdn.com/cache/280x280/ts/product/ca/0d/b0/e183f5f1d1e66d8c402b50b476e4a486.jpg.webp"
-                                }
-                                alt=""
-                            />
-                            <span className="px-2 py-1 text-xs rounded absolute top-0 text-red-600 bg-red-300">
-                                30%
-                            </span>
-                        </Typography>
-                        <Typography className="m-auto">
-                            <span className="text-2xl font-bold">xxxxx</span>{" "}
-                            <br />
-                            <span>Price: 123$</span>
-                        </Typography>
-                    </CardBody>
-                    <CardFooter className="pt-0">
-                        <Button>Read More</Button>
-                    </CardFooter>
-                </Card>
-                <Card className="mt-6 border border-collapse">
-                    <CardBody>
-                        <Typography
-                            variant="h6"
-                            color="blue-gray"
-                            className="mb-2 relative"
-                        >
-                            <img
-                                src={
-                                    "https://salt.tikicdn.com/cache/280x280/ts/product/ca/0d/b0/e183f5f1d1e66d8c402b50b476e4a486.jpg.webp"
-                                }
-                                alt=""
-                            />
-                            <span className="px-2 py-1 text-xs rounded absolute top-0 text-red-600 bg-red-300">
-                                30%
-                            </span>
                         </Typography>
                         <Typography className="m-auto">
                             <span className="text-2xl font-bold">xxxxx</span>{" "}

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { SignUpInterface } from "../../../../interface/client";
-import { InputField, Required, Snipper } from "../../components";
-import { apiRegister } from "../../../../apis";
+import { SignUpInterface } from "../../../interface/client";
+import { InputField, Required, Snipper } from "../../customer-site/components";
+import { apiRegister } from "../../../apis";
 import Swal from "sweetalert2";
-import Dialog from "../../components/dialog";
+import Dialog from "../../customer-site/components/dialog";
 
 const SignUp = () => {
     const [payload, setPayload] = useState<SignUpInterface>({

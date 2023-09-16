@@ -15,6 +15,7 @@ import {
     GetCapacity,
     GetColor,
     GetAllProduct,
+    GetAllBlog,
 } from "../../../../store/actions";
 import { getBase64 } from "../../utils/helper";
 import Required from "../required";
@@ -26,6 +27,7 @@ import {
     apiCreateColor,
     apiCreateRam,
     apiCreateCapacity,
+    apiCreateBlog,
 } from "../../../../apis";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../../store";
@@ -35,6 +37,7 @@ import Brand from "./chillModalCreate/Brand";
 import Category from "./chillModalCreate/Category";
 import Color from "./chillModalCreate/Color";
 import Capacity from "./chillModalCreate/Capacity";
+import Blog from "./chillModalCreate/Blog";
 const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
     const [open, setOpen] = useState<boolean>(false);
     const [isSnipper, setIsSnipper] = useState(false);
@@ -63,6 +66,7 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
         price: false,
         category: false,
         brand: false,
+        blog: false,
         image: false,
         ram: false,
         capacity: false,
@@ -374,6 +378,29 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                     toast.success("Create ram successfully");
                 } else {
                     toast.error("Create ram failed");
+                }
+                props.handleClose(false);
+            }
+        }
+        if (slug === "manager-blog") {
+            if (value === "") {
+                setCheckValid((prevState) => ({
+                    ...prevState,
+                    blog: true,
+                }));
+            }
+            if (value !== "") {
+                const response = await apiCreateBlog({
+                    title: value.title,
+                    description: value.description,
+                });
+                if (response.data.success) {
+                    setValue("");
+                    setIsSnipper(false);
+                    dispatch(GetAllBlog(null));
+                    toast.success("Create category successfully");
+                } else {
+                    toast.error("Create category failed");
                 }
                 props.handleClose(false);
             }
@@ -716,6 +743,11 @@ const ModalCreateComponent: React.FC<ModalCreate> = (props) => {
                             keywords="Title"
                             setShow={setCheckValid}
                         />
+                    </div>
+                )}
+                {slug === "manager-blog" && (
+                    <div>
+                        <Blog handleData={handleData} />
                     </div>
                 )}
             </DialogBody>

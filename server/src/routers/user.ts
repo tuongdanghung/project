@@ -12,16 +12,15 @@ router.get("/", [verifyToken, isAdmin], controllers.getAllUser);
 router.put("/address", [verifyToken], controllers.addressUser);
 router.put("/update", [verifyToken], controllers.updateUser);
 router.put("/update/cart", [verifyToken], controllers.updateCart);
-router.delete(
-    "/delete-cart/:pid",
-    [verifyToken],
-    controllers.removeCart
-);
+router.delete("/delete-cart/:pid", [verifyToken], controllers.removeCart);
 router.put(
     "/updateAdmin/:uid",
     [verifyToken, isAdmin],
     controllers.updateUserByAdmin
 );
+router.post("/forgotpassword", controllers.forgotPassword);
+router.put("/resetpassword", controllers.resetPassword);
+
 module.exports = router;
 
 // CRUD

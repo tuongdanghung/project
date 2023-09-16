@@ -10,7 +10,7 @@ const pathAdmin = {
     MANAGER_RAM: "manage-ram",
     MANAGER_CAPACITY: "manage-capacity",
     MANAGER_ORDER: "manage-oder",
-    MANAGER_COMMENT: "manage-comment",
+    MANAGER_BLOG: "manage-blog",
     MANAGER_EXAMPLE: "manage-example",
 };
 

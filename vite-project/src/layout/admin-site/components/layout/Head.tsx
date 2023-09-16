@@ -25,6 +25,7 @@ const Head: React.FC<Props> = (props) => {
             <div className="flex w-full shrink-0 gap-2 md:w-max">
                 <SearchComponent slug={props.slug} />
                 {props.slug !== "manager-order" &&
+                props.slug !== "manager-comment" &&
                 props.slug !== "manager-user" ? (
                     <Button
                         onClick={() => handleOpen()}
@@ -34,7 +35,7 @@ const Head: React.FC<Props> = (props) => {
                     </Button>
                 ) : null}
 
-                <Download />
+                {/* <Download /> */}
             </div>
             <ModalCreateComponent
                 open={open}

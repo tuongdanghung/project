@@ -5,7 +5,7 @@ import {
     GetOneOrder,
 } from "../../../../store/actions";
 import { Button, Rating, Textarea } from "@material-tailwind/react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../../store";
 import { apiUpdateCart, apiCreateComment } from "../../../../apis";
@@ -106,14 +106,6 @@ const ProductDetail = () => {
             dispatch(GetOneUser(token));
         } else {
             toast.error("Add to cart failed");
-        }
-    };
-    const handleClick = (amount: number) => {
-        if (quantity + amount >= 1) {
-            setQuantity((prevValue: number) => prevValue + amount);
-        }
-        if (quantity + amount > detail?.quantity) {
-            setQuantity(detail?.quantity);
         }
     };
     const handleEdit = (id: string) => {
@@ -292,6 +284,7 @@ const ProductDetail = () => {
                         <div className="mt-2 flex">
                             <span className="w-[100px] block">Color</span>
                             {detail?.color?.map((item: any, index: number) => {
+                                console.log(item);
                                 return (
                                     <button
                                         key={item._id}
@@ -309,33 +302,63 @@ const ProductDetail = () => {
                         </div>
                         <div className="mt-2 flex">
                             <span className="w-[100px] block">Quantity</span>
-                            <button
-                                onClick={() => setQuantity(quantity - 1)}
-                                className="border h-[30px] border-collapse py-1 px-3 ml-2"
-                            >
-                                -
-                            </button>
-                            <input
-                                className="w-[150px] h-[30px] ml-2"
-                                type="number"
-                                value={quantity ? quantity : 1}
-                                onChange={(e) =>
-                                    setQuantity(Number(e.target.value))
-                                }
-                            />
-                            <button
-                                onClick={() => setQuantity(quantity + 1)}
-                                className="border h-[30px] border-collapse py-1 px-3 ml-2"
-                            >
-                                +
-                            </button>
+                            <p className="ml-2">{detail.quantity} pcs</p>
                         </div>
-                        <button
-                            onClick={handleAddToCart}
-                            className=" bg-red-500 hover:bg-red-600 text-white border border-collapse mt-6 px-3 py-2 w-full"
-                        >
-                            Add to cart
-                        </button>
+                        {detail.quantity > 0 ? (
+                            <div className="mt-2 flex">
+                                <span className="w-[100px] block">Enter</span>
+                                <button
+                                    onClick={() => setQuantity(quantity - 1)}
+                                    className="border h-[30px] border-collapse py-1 px-3 ml-2"
+                                >
+                                    -
+                                </button>
+                                <input
+                                    className="w-[150px] h-[30px] ml-2"
+                                    type="number"
+                                    value={quantity ? quantity : 1}
+                                    onChange={(e) =>
+                                        setQuantity(Number(e.target.value))
+                                    }
+                                />
+                                <button
+                                    onClick={() => setQuantity(quantity + 1)}
+                                    className="border h-[30px] border-collapse py-1 px-3 ml-2"
+                                >
+                                    +
+                                </button>
+                            </div>
+                        ) : (
+                            <p className="text-red-500">out of stock</p>
+                        )}
+                        {token !== null ? (
+                            <div>
+                                {oneUser?.isBlocked === true ? (
+                                    <i className="text-red-500">
+                                        Your account is so bad that you can't
+                                        buy the product
+                                    </i>
+                                ) : (
+                                    <button
+                                        onClick={handleAddToCart}
+                                        className=" bg-red-500 hover:bg-red-600 text-white border border-collapse mt-6 px-3 py-2 w-full"
+                                    >
+                                        Add to cart
+                                    </button>
+                                )}
+                            </div>
+                        ) : (
+                            <p className="mt-4">
+                                Please log in{" "}
+                                <Link
+                                    className="text-red-500 hover:text-light-blue-900"
+                                    to={"/login"}
+                                >
+                                    here
+                                </Link>{" "}
+                                to purchase
+                            </p>
+                        )}
                     </div>
                     <div className="col">3</div>
                 </div>

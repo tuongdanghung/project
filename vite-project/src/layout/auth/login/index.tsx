@@ -7,6 +7,7 @@ import {
 } from "@material-tailwind/react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import ResetPassword from "./fogot";
 
 const Login = () => {
     const data = [
@@ -23,10 +24,7 @@ const Login = () => {
         {
             label: "Forgot password",
             value: "forgot",
-            desc: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-             Fuga itaque tempore, illum in pariatur facere praesentium,
-              voluptates repellendus at porro sed est perspiciatis officia cum 
-              expedita aliquam enim rerum labore.`,
+            desc: <ResetPassword />,
         },
     ];
 

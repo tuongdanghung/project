@@ -7,6 +7,7 @@ const capacity = require("./product/capacity");
 const color = require("./product/color");
 const order = require("./order");
 const comment = require("./comment");
+const blog = require("./blog");
 
 module.exports = (app: any) => {
     app.use("/api/user", user);
@@ -18,4 +19,5 @@ module.exports = (app: any) => {
     app.use("/api/color", color);
     app.use("/api/order", order);
     app.use("/api/comment", comment);
+    app.use("/api/blog", blog);
 };

@@ -369,7 +369,52 @@ const removeCart = asyncHandler(async (req: any, res: Response) => {
         data: response ? response : "Some thing went wrong",
     });
 });
+const forgotPassword = asyncHandler(async (req: any, res: Response) => {
+    const { email } = req.body;
+    if (!email) throw new Error("Missing email");
+    const user = await UserModel.findOne({ email });
+    if (!user) throw new Error("User not found");
+    const resetToken = user.createPasswordChangedToken();
+    await user.save();
+
+    const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu của bạn.
+    Link này sẽ hết hạn sau 15 phút kể từ bây giờ. <a href=${process.env.CLIENT_URL}/reset-password/${resetToken}>
+    Click here</a>`;
+
+    const data = {
+        email,
+        html,
+        subject: "Forgot Password",
+    };
+    const rs = await sendMail(data);
+    return res.status(200).json({
+        success: true,
+        rs,
+    });
+});
 // remove cart
+const resetPassword = asyncHandler(async (req: any, res: Response) => {
+    const { password, token } = req.body;
+    if (!password || !token) throw new Error("Missing inputs");
+    const passwordResetToken = crypto
+        .createHash("sha256")
+        .update(token)
+        .digest("hex");
+    const user = await UserModel.findOne({
+        passwordResetToken,
+        passwordResetExpires: { $gt: Date.now() },
+    });
+    if (!user) throw new Error("Invalid reset token");
+    user.password = password;
+    user.passwordResetToken = undefined;
+    user.passwordChangdAt = Date.now();
+    user.passwordResetExpires = undefined;
+    await user.save();
+    return res.status(200).json({
+        success: user ? true : false,
+        message: user ? "Updated password" : "Something went wrong",
+    });
+});
 module.exports = {
     register,
     login,
@@ -383,4 +428,6 @@ module.exports = {
     updateUserByAdmin,
     updateCart,
     removeCart,
+    forgotPassword,
+    resetPassword,
 };

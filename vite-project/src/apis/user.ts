@@ -38,6 +38,14 @@ export const apiFinalRegister = (params: string) =>
         method: "PUT",
     });
 
+export const apiUpdateUser = (data: any) =>
+    axios({
+        url: `/user/update`,
+        method: "PUT",
+        data: data,
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
 export const apiUpdateUserByAdmin = (data: any) =>
     axios({
         url: `/user/updateAdmin/${data.id}`,
@@ -57,4 +65,17 @@ export const apiDeleteCart = (data: any) =>
         url: `/user/delete-cart/${data.id}`,
         method: "DELETE",
         headers: { Authorization: `Bearer ${data.token}` },
+    });
+
+export const apiForgotPassword = (data: any) =>
+    axios({
+        url: "/user/forgotpassword",
+        method: "POST",
+        data: data,
+    });
+export const apiResetToken = (data: any) =>
+    axios({
+        url: "/user/resetpassword",
+        method: "PUT",
+        data: data,
     });
